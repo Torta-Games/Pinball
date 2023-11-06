@@ -65,7 +65,7 @@ Thumbs.db
 
 [Bb]uild
 [Bb]in
-[Dd]ebug/
+/[Dd]ebug/
 *.sbr
 *.sdf
 obj/
