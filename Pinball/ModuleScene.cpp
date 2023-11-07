@@ -21,6 +21,9 @@ bool ModuleScene::Start()
 	LOG("Loading assets");
 	bool ret = true;
 	backgroundTexture = App->textures->Load("pinball/pinball_background.png");
+	springTexture = App->textures->Load("pinball/spring.png");
+	springPosition = iPoint(461, 676);
+	springBody = App->physics->CreateRectangle(springPosition.x, springPosition.y, 21, 94, b2_kinematicBody);
 	return ret;
 }
 
@@ -35,7 +38,29 @@ bool ModuleScene::CleanUp()
 // Update: draw background
 update_status ModuleScene::Update()
 {
+	b2Vec2 vel = springBody->body->GetLinearVelocity();
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && springPosition.y < 700)
+	{
+		vel.y = 2;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && springPosition.y > 676)
+	{
+		vel.y = -9;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && springPosition.y >= 700 
+		|| App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && springPosition.y <= 676)
+	{
+		vel.SetZero();
+	}
+
+	springBody->body->SetLinearVelocity(vel);
+
+	springPosition = iPoint(METERS_TO_PIXELS(springBody->body->GetPosition().x), METERS_TO_PIXELS(springBody->body->GetPosition().y));
+
 	App->renderer->Blit(backgroundTexture, 0, 0);
+	App->renderer->Blit(springTexture, springPosition.x-10, springPosition.y-47);
 	return UPDATE_CONTINUE;
 }
 
