@@ -22,8 +22,8 @@ bool ModuleScene::Start()
 	bool ret = true;
 	backgroundTexture = App->textures->Load("pinball/pinball_background.png");
 	springTexture = App->textures->Load("pinball/spring.png");
-	springPosition = iPoint(461, 677);
-	rectangles.add(App->physics->CreateRectangle(springPosition.x, springPosition.y, 21, 94, b2_kinematicBody));
+	springPosition = iPoint(461, 676);
+	springBody = App->physics->CreateRectangle(springPosition.x, springPosition.y, 21, 94, b2_kinematicBody);
 	return ret;
 }
 
@@ -38,10 +38,26 @@ bool ModuleScene::CleanUp()
 // Update: draw background
 update_status ModuleScene::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && springPosition.y <= 700) rectangles.getFirst()->data->body->SetLinearVelocity(b2Vec2(0,1));
-	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && springPosition.y >= 677) rectangles.getFirst()->data->body->SetLinearVelocity(b2Vec2(0, -3)); 
-	else rectangles.getFirst()->data->body->SetLinearVelocity(b2Vec2(0, 0));
-	springPosition = iPoint(METERS_TO_PIXELS(rectangles.getFirst()->data->body->GetPosition().x), METERS_TO_PIXELS(rectangles.getFirst()->data->body->GetPosition().y));
+	b2Vec2 vel = springBody->body->GetLinearVelocity();
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && springPosition.y < 700)
+	{
+		vel.y = 2;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && springPosition.y > 676)
+	{
+		vel.y = -9;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && springPosition.y >= 700 
+		|| App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && springPosition.y <= 676)
+	{
+		vel.SetZero();
+	}
+
+	springBody->body->SetLinearVelocity(vel);
+
+	springPosition = iPoint(METERS_TO_PIXELS(springBody->body->GetPosition().x), METERS_TO_PIXELS(springBody->body->GetPosition().y));
 
 	App->renderer->Blit(backgroundTexture, 0, 0);
 	App->renderer->Blit(springTexture, springPosition.x-10, springPosition.y-47);

@@ -21,7 +21,7 @@ private:
 	SDL_Texture* backgroundTexture;
 	SDL_Texture* springTexture;
 
-	p2List<PhysBody*> rectangles;
+	PhysBody* springBody;
 	iPoint springPosition;
 
 };
