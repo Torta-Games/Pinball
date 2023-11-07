@@ -19,4 +19,9 @@ public:
 
 private:
 	SDL_Texture* backgroundTexture;
+	SDL_Texture* springTexture;
+
+	PhysBody* springBody;
+	iPoint springPosition;
+
 };

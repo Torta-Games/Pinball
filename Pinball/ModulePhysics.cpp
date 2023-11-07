@@ -37,7 +37,6 @@ bool ModulePhysics::Start()
 update_status ModulePhysics::PreUpdate()
 {
 	world->Step(1.0f / 60.0f, 6, 2);
-
 	for(b2Contact* c = world->GetContactList(); c; c = c->GetNext())
 	{
 		if(c->GetFixtureA()->IsSensor() && c->IsTouching())
@@ -52,10 +51,10 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -65,6 +64,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
 	fixture.density = 1.0f;
+	fixture.friction = friction;
 
 	b->CreateFixture(&fixture);
 
@@ -76,10 +76,10 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2BodyType type)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -165,8 +165,34 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 // 
 update_status ModulePhysics::PostUpdate()
 {
+	
+
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
+
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN && GRAVITY_Y < -1.0f)
+	{
+		GRAVITY_Y += 1.0f;
+		world->SetGravity(b2Vec2(GRAVITY_X, -GRAVITY_Y)); // Actualiza la gravedad en el mundo
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && GRAVITY_Y > -13.0f)
+	{
+		GRAVITY_Y -= 1.0f;
+		world->SetGravity(b2Vec2(GRAVITY_X, -GRAVITY_Y)); // Actualiza la gravedad en el mundo
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && friction > 0.05)
+	{
+		friction -= 0.05f;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && friction < 0.45)
+	{
+		friction += 0.05f;
+	}
+
+
 
 	if(!debug)
 		return UPDATE_CONTINUE;
