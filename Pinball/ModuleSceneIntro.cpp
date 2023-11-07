@@ -30,6 +30,8 @@ bool ModuleSceneIntro::Start()
 	rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
+	LoadMap();
+
 	return ret;
 }
 
@@ -164,6 +166,12 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleSceneIntro::LoadMap()
+{
+	chains.add(App->physics->CreateChain(0, 0, pinball, 338/*, b2BodyType::b2_staticBody*/));
+
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
