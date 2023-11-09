@@ -28,6 +28,8 @@ bool ModuleScene::Start()
 	glow200Texture = App->textures->Load("pinball/glow_200_points.png");
 	glow500Texture = App->textures->Load("pinball/glow_500_points.png");
 	glow1000Texture = App->textures->Load("pinball/glow_1000_points.png");
+	glowLeftTexture = App->textures->Load("pinball/glow_abajo_izquierdo.png");
+	glowRightTexture = App->textures->Load("pinball/glow_abajo_derecho.png");
 	springPosition = iPoint(461, 676);
 	springBody = App->physics->CreateRectangle(springPosition.x, springPosition.y, 21, 94, b2_kinematicBody);
 	return ret;
@@ -75,6 +77,8 @@ update_status ModuleScene::Update()
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_REPEAT) App->renderer->Blit(glow200Texture, 0, 0);
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_REPEAT) App->renderer->Blit(glow500Texture, 0, 0);
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_REPEAT) App->renderer->Blit(glow1000Texture, 0, 0);
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_REPEAT) App->renderer->Blit(glowLeftTexture, 0, 0);
+	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_REPEAT) App->renderer->Blit(glowRightTexture, 0, 0);
 
 	return UPDATE_CONTINUE;
 }

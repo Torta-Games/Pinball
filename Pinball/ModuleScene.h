@@ -26,6 +26,8 @@ private:
 	SDL_Texture* glow200Texture;
 	SDL_Texture* glow500Texture;
 	SDL_Texture* glow1000Texture;
+	SDL_Texture* glowLeftTexture;
+	SDL_Texture* glowRightTexture;
 
 	PhysBody* springBody;
 	iPoint springPosition;
