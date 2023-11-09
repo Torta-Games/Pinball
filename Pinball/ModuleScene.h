@@ -19,9 +19,17 @@ public:
 
 private:
 	SDL_Texture* backgroundTexture;
+	SDL_Texture* backgroundTexture2;
 	SDL_Texture* springTexture;
+	SDL_Texture* rotatingLightsTexture;
+	SDL_Texture* glow100Texture;
+	SDL_Texture* glow200Texture;
+	SDL_Texture* glow500Texture;
+	SDL_Texture* glow1000Texture;
 
 	PhysBody* springBody;
 	iPoint springPosition;
+
+	double rotation = 0;
 
 };

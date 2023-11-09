@@ -21,7 +21,13 @@ bool ModuleScene::Start()
 	LOG("Loading assets");
 	bool ret = true;
 	backgroundTexture = App->textures->Load("pinball/pinball_background.png");
+	backgroundTexture2 = App->textures->Load("pinball/back.png");
 	springTexture = App->textures->Load("pinball/spring.png");
+	rotatingLightsTexture = App->textures->Load("pinball/circular_rotative_neon.png");
+	glow100Texture = App->textures->Load("pinball/glow_100_points.png");
+	glow200Texture = App->textures->Load("pinball/glow_200_points.png");
+	glow500Texture = App->textures->Load("pinball/glow_500_points.png");
+	glow1000Texture = App->textures->Load("pinball/glow_1000_points.png");
 	springPosition = iPoint(461, 676);
 	springBody = App->physics->CreateRectangle(springPosition.x, springPosition.y, 21, 94, b2_kinematicBody);
 	return ret;
@@ -55,12 +61,21 @@ update_status ModuleScene::Update()
 		vel.SetZero();
 	}
 
+	rotation++;
+
 	springBody->body->SetLinearVelocity(vel);
 
 	springPosition = iPoint(METERS_TO_PIXELS(springBody->body->GetPosition().x), METERS_TO_PIXELS(springBody->body->GetPosition().y));
 
 	App->renderer->Blit(backgroundTexture, 0, 0);
 	App->renderer->Blit(springTexture, springPosition.x-10, springPosition.y-47);
+	App->renderer->Blit(rotatingLightsTexture, 125, 150, NULL, 1.0f, rotation);
+	//App->renderer->Blit(backgroundTexture2, 0, 0);
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_REPEAT) App->renderer->Blit(glow100Texture, 0, 0);
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_REPEAT) App->renderer->Blit(glow200Texture, 0, 0);
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_REPEAT) App->renderer->Blit(glow500Texture, 0, 0);
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_REPEAT) App->renderer->Blit(glow1000Texture, 0, 0);
+
 	return UPDATE_CONTINUE;
 }
 
