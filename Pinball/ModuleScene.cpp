@@ -50,11 +50,11 @@ update_status ModuleScene::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && springPosition.y < 700)
 	{
-		vel.y = 2;
+		vel.y++;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && springPosition.y > 676)
 	{
-		vel.y = -9;
+		vel.y-=2;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && springPosition.y >= 700 
@@ -63,7 +63,7 @@ update_status ModuleScene::Update()
 		vel.SetZero();
 	}
 
-	rotation++;
+	rotation--;
 
 	springBody->body->SetLinearVelocity(vel);
 

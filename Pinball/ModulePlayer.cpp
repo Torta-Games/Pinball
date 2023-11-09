@@ -20,7 +20,6 @@ bool ModulePlayer::Start()
 	balls.add(App->physics->CreateCircle(410, 780, 10, b2_staticBody));
 	balls.add(App->physics->CreateCircle(435, 780, 10, b2_staticBody));
 	balls.add(App->physics->CreateCircle(460, 780, 10, b2_staticBody));
-	balls.add(App->physics->CreateCircle(462, 600, 10, b2_dynamicBody));
 	//balls.getLast()->data->listener = this;
 	LOG("Loading player");
 	return true;
@@ -29,7 +28,14 @@ bool ModulePlayer::Start()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && !isAlive && ballCount > 0)
+	{
+		App->physics->world->DestroyBody(balls.getLast()->data->body);
+		balls.del(balls.getLast());
+		balls.add(App->physics->CreateCircle(462, 600, 10, b2_dynamicBody));
+		isAlive = true;
+		ballCount--;
+	}
 	p2List_item<PhysBody*>* c = balls.getFirst();
 
 	while (c != NULL)
@@ -49,4 +55,10 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading player");
 
 	return true;
+}
+
+void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+	App->physics->world->DestroyBody(balls.getLast()->data->body);
+	balls.del(balls.getLast());
 }
