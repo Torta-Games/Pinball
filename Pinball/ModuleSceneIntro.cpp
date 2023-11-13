@@ -189,6 +189,9 @@ void ModuleSceneIntro::LoadMap()
 	Boing_3 = (App->physics->CreateChain(0, 0, boing3, 14, b2BodyType::b2_staticBody));
 	Boing_4 = (App->physics->CreateChain(0, 0, boing4, 14, b2BodyType::b2_staticBody));
 
+	circulo1 = (App->physics->CreateCircle(19, 334, 7, b2BodyType::b2_staticBody));
+	circulo2 = (App->physics->CreateCircle(161, 99, 7, b2BodyType::b2_staticBody));
+
 	boxes.add(App->physics->CreateRectangleSensor(230, 780, 220, 2));
 
 }

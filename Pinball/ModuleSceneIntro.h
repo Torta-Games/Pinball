@@ -41,6 +41,9 @@ public:
 	PhysBody* Boing_3;
 	PhysBody* Boing_4;
 
+	PhysBody* circulo1;
+	PhysBody* circulo2;
+
 
 	PhysBody* sensor;
 	bool sensed;
@@ -92,11 +95,11 @@ public:
 		432, 405,
 		436, 401,
 		441, 401,
-		445, 405,
-		448, 412,
-		450, 417,
-		451, 421,
-		451, 723,
+		442, 405,
+		446, 412,
+		448, 417,
+		449, 421,
+		449, 723,
 		471, 723,
 		471, 440,
 		471, 429,
