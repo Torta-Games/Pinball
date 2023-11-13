@@ -17,6 +17,11 @@ public:
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
+
+	bool leftTriangleColliding = false;
+	bool rightTriangleColliding = false;
+	float timer = 0;
+
 private:
 	SDL_Texture* backgroundTexture;
 	SDL_Texture* backgroundTexture2;

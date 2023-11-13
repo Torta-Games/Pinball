@@ -4,6 +4,7 @@
 #include "ModulePhysics.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
+#include "ModuleScene.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -70,6 +71,12 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 	case ColliderType::SENSOR:
 		canDestroy = true;
+		break;
+	case ColliderType::TRIANGLE_LEFT:
+		App->scene->leftTriangleColliding = true;
+		break;
+	case ColliderType::TRIANGLE_RIGHT:
+		App->scene->rightTriangleColliding = true;
 		break;
 	}
 }
