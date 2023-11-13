@@ -24,4 +24,6 @@ public:
 	bool canDestroy = false;
 	int ballCount = 4;
 
+	int score = 0;
+
 };

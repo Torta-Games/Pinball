@@ -32,6 +32,10 @@ bool ModuleScene::Start()
 	glowRightTexture = App->textures->Load("pinball/glow_abajo_derecho.png");
 	springPosition = iPoint(461, 676);
 	springBody = App->physics->CreateRectangle(springPosition.x, springPosition.y, 21, 94, b2_kinematicBody);
+	circle1000Body = App->physics->CreateCircle(199, 223, 22, b2_kinematicBody);
+	circle1000Body->ctype = ColliderType::CIRCLE_1000;
+	circle500Body = App->physics->CreateCircle(188, 302, 25, b2_kinematicBody);
+	circle500Body->ctype = ColliderType::CIRCLE_500;
 	return ret;
 }
 
@@ -75,8 +79,28 @@ update_status ModuleScene::Update()
 	//App->renderer->Blit(backgroundTexture2, 0, 0);
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_REPEAT) App->renderer->Blit(glow100Texture, 0, 0);
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_REPEAT) App->renderer->Blit(glow200Texture, 0, 0);
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_REPEAT) App->renderer->Blit(glow500Texture, 0, 0);
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_REPEAT) App->renderer->Blit(glow1000Texture, 0, 0);
+	if (circle500Colliding)
+	{
+		if (timer == 0) timer = SDL_GetTicks();
+
+		if (SDL_GetTicks() - timer >= 200)
+		{
+			timer = 0;
+			circle500Colliding = false;
+		}
+		else App->renderer->Blit(glow500Texture, 0, 0);
+	}
+	if (circle1000Colliding)
+	{
+		if (timer == 0) timer = SDL_GetTicks();
+
+		if (SDL_GetTicks() - timer >= 200)
+		{
+			timer = 0;
+			circle1000Colliding = false;
+		}
+		else App->renderer->Blit(glow1000Texture, 0, 0);
+	}
 	if (leftTriangleColliding)
 	{
 		if (timer == 0) timer = SDL_GetTicks();

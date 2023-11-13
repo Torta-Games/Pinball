@@ -20,6 +20,8 @@ public:
 
 	bool leftTriangleColliding = false;
 	bool rightTriangleColliding = false;
+	bool circle1000Colliding = false;
+	bool circle500Colliding = false;
 	float timer = 0;
 
 private:
@@ -35,6 +37,8 @@ private:
 	SDL_Texture* glowRightTexture;
 
 	PhysBody* springBody;
+	PhysBody* circle1000Body;
+	PhysBody* circle500Body;
 	iPoint springPosition;
 
 	double rotation = 0;

@@ -17,6 +17,8 @@ enum class ColliderType {
 	SENSOR,
 	TRIANGLE_LEFT,
 	TRIANGLE_RIGHT,
+	CIRCLE_1000,
+	CIRCLE_500
 	// ..
 };
 

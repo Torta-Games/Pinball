@@ -78,6 +78,12 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderType::TRIANGLE_RIGHT:
 		App->scene->rightTriangleColliding = true;
 		break;
+	case ColliderType::CIRCLE_1000:
+		App->scene->circle1000Colliding = true;
+		break;
+	case ColliderType::CIRCLE_500:
+		App->scene->circle500Colliding = true;
+		break;
 	}
 }
 
