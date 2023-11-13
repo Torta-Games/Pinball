@@ -22,7 +22,9 @@ public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
-	p2List<PhysBody*> chains;
+	PhysBody* Pinball;
+	PhysBody* Abajo_Derecha;
+	PhysBody* Abajo_Izquierda;
 
 	PhysBody* sensor;
 	bool sensed;
@@ -204,5 +206,46 @@ public:
 		478, 800,
 		480, -1,
 		1, -1
+	};
+
+	int abajo_derecha[34] = {
+	99, 631,
+	124, 688,
+	126, 697,
+	124, 702,
+	118, 703,
+	111, 701,
+	80, 684,
+	76, 681,
+	75, 677,
+	75, 672,
+	75, 629,
+	75, 623,
+	78, 619,
+	83, 617,
+	89, 618,
+	91, 620,
+	99, 630
+	};
+
+	int abajo_izquierda[36] = {
+	347, 636,
+	321, 691,
+	320, 697,
+	322, 702,
+	327, 703,
+	334, 702,
+	340, 699,
+	367, 682,
+	371, 679,
+	373, 676,
+	374, 669,
+	374, 628,
+	372, 622,
+	369, 618,
+	364, 617,
+	358, 619,
+	355, 622,
+	347, 635
 	};
 };

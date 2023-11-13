@@ -170,7 +170,9 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::LoadMap()
 {
-	chains.add(App->physics->CreateChain(0, 0, pinball, 338, b2BodyType::b2_staticBody));
+	Pinball = (App->physics->CreateChain(0, 0, pinball, 338, b2BodyType::b2_staticBody));
+	Abajo_Derecha = (App->physics->CreateChain(0, 0, abajo_derecha, 34, b2BodyType::b2_staticBody));
+	Abajo_Izquierda = (App->physics->CreateChain(0, 0, abajo_izquierda, 36, b2BodyType::b2_staticBody));
 	boxes.add(App->physics->CreateRectangleSensor(230, 780, 220, 2));
 
 }
