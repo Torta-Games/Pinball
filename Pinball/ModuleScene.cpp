@@ -77,8 +77,28 @@ update_status ModuleScene::Update()
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_REPEAT) App->renderer->Blit(glow200Texture, 0, 0);
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_REPEAT) App->renderer->Blit(glow500Texture, 0, 0);
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_REPEAT) App->renderer->Blit(glow1000Texture, 0, 0);
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_REPEAT) App->renderer->Blit(glowLeftTexture, 0, 0);
-	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_REPEAT) App->renderer->Blit(glowRightTexture, 0, 0);
+	if (leftTriangleColliding)
+	{
+		if (timer == 0) timer = SDL_GetTicks();
+
+		if (SDL_GetTicks() - timer >= 200)
+		{
+			timer = 0;
+			leftTriangleColliding = false;
+		}
+		else App->renderer->Blit(glowLeftTexture, 0, 0);
+	}
+	if (rightTriangleColliding)
+	{
+		if (timer == 0) timer = SDL_GetTicks();
+
+		if (SDL_GetTicks() - timer >= 200)
+		{
+			timer = 0;
+			rightTriangleColliding = false;
+		}
+		else App->renderer->Blit(glowRightTexture, 0, 0);
+	}
 
 	return UPDATE_CONTINUE;
 }

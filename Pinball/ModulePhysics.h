@@ -15,6 +15,8 @@ enum class ColliderType {
 	BALL,
 	FLIPPER,
 	SENSOR,
+	TRIANGLE_LEFT,
+	TRIANGLE_RIGHT,
 	// ..
 };
 

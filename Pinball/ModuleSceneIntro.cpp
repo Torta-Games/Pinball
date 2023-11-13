@@ -170,10 +170,15 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::LoadMap()
 {
-	Pinball = (App->physics->CreateChain(0, 0, pinball, 603, b2BodyType::b2_staticBody));
+	Pinball = (App->physics->CreateChain(0, 0, pinball, 338, b2BodyType::b2_staticBody));
 
-	Abajo_Derecha = (App->physics->CreateChain(0, 0, abajo_derecha, 34, b2BodyType::b2_staticBody));
-	Abajo_Izquierda = (App->physics->CreateChain(0, 0, abajo_izquierda, 36, b2BodyType::b2_staticBody));
+	Abajo_Derecha = (App->physics->CreateChain(0, 0, abajo_derecha, 36, b2BodyType::b2_staticBody));
+	Abajo_Derecha->listener = this;
+	Abajo_Derecha->ctype = ColliderType::TRIANGLE_RIGHT;
+	
+	Abajo_Izquierda = (App->physics->CreateChain(0, 0, abajo_izquierda, 34, b2BodyType::b2_staticBody));
+	Abajo_Izquierda->listener = this;
+	Abajo_Izquierda->ctype = ColliderType::TRIANGLE_LEFT;
 
 	Propulsor_1 = (App->physics->CreateChain(0, 0, propulsor1, 10, b2BodyType::b2_staticBody));
 	Propulsor_2 = (App->physics->CreateChain(0, 0, propulsor2, 12, b2BodyType::b2_staticBody));
@@ -189,29 +194,13 @@ void ModuleSceneIntro::LoadMap()
 	Boing_3 = (App->physics->CreateChain(0, 0, boing3, 14, b2BodyType::b2_staticBody));
 	Boing_4 = (App->physics->CreateChain(0, 0, boing4, 14, b2BodyType::b2_staticBody));
 
-	circulo1 = (App->physics->CreateCircle(19, 334, 7, b2BodyType::b2_staticBody));
-	circulo2 = (App->physics->CreateCircle(161, 99, 7, b2BodyType::b2_staticBody));
-
-	boxes.add(App->physics->CreateRectangleSensor(230, 780, 220, 2));
+	boxes.add(App->physics->CreateRectangleSensor(230, 800, 220, 2));
+	boxes.getLast()->data->listener = this;
+	boxes.getLast()->data->ctype = ColliderType::SENSOR;
 
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	int x, y;
 
-	App->audio->PlayFx(bonus_fx);
-
-	/*
-	if(bodyA)
-	{
-		bodyA->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}
-
-	if(bodyB)
-	{
-		bodyB->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}*/
 }

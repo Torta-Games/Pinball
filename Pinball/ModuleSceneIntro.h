@@ -359,7 +359,7 @@ public:
 		155, 800
 	};
 
-	int abajo_derecha[34] = {
+	int abajo_izquierda[34] = {
 	99, 631,
 	124, 688,
 	126, 697,
@@ -379,7 +379,7 @@ public:
 	99, 630
 	};
 
-	int abajo_izquierda[36] = {
+	int abajo_derecha[36] = {
 	347, 636,
 	321, 691,
 	320, 697,
