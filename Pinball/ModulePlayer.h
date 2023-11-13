@@ -14,12 +14,14 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	void DestroyBall();
 
 public:	
 	p2List<PhysBody*> balls;
 	SDL_Texture* ballTexture;
 
 	bool isAlive = false;
+	bool canDestroy = false;
 	int ballCount = 4;
 
 };

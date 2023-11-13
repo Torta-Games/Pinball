@@ -171,7 +171,9 @@ update_status ModuleSceneIntro::Update()
 void ModuleSceneIntro::LoadMap()
 {
 	chains.add(App->physics->CreateChain(0, 0, pinball, 338, b2BodyType::b2_staticBody));
-	boxes.add(App->physics->CreateRectangleSensor(230, 780, 220, 2));
+	boxes.add(App->physics->CreateRectangleSensor(230, 800, 220, 2));
+	boxes.getLast()->data->listener = this;
+	boxes.getLast()->data->ctype = ColliderType::SENSOR;
 
 }
 
