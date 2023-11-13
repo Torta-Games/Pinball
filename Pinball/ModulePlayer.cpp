@@ -20,7 +20,6 @@ bool ModulePlayer::Start()
 	balls.add(App->physics->CreateCircle(410, 780, 10, b2_staticBody));
 	balls.add(App->physics->CreateCircle(435, 780, 10, b2_staticBody));
 	balls.add(App->physics->CreateCircle(460, 780, 10, b2_staticBody));
-	//balls.getLast()->data->listener = this;
 	LOG("Loading player");
 	return true;
 }
@@ -30,12 +29,20 @@ update_status ModulePlayer::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && !isAlive && ballCount > 0)
 	{
-		App->physics->world->DestroyBody(balls.getLast()->data->body);
-		balls.del(balls.getLast());
+		DestroyBall();
 		balls.add(App->physics->CreateCircle(462, 600, 10, b2_dynamicBody));
+		balls.getLast()->data->listener = this;
+		balls.getLast()->data->ctype = ColliderType::BALL;
 		isAlive = true;
 		ballCount--;
 	}
+
+	if (canDestroy)
+	{
+		canDestroy = false;
+		DestroyBall();
+	}
+
 	p2List_item<PhysBody*>* c = balls.getFirst();
 
 	while (c != NULL)
@@ -59,6 +66,22 @@ bool ModulePlayer::CleanUp()
 
 void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	App->physics->world->DestroyBody(balls.getLast()->data->body);
-	balls.del(balls.getLast());
+	switch (bodyB->ctype)
+	{
+	case ColliderType::SENSOR:
+		canDestroy = true;
+		break;
+	}
+}
+
+void ModulePlayer::DestroyBall()
+{
+    if (balls.count() > 0) {
+        if (isAlive) isAlive = false;
+        PhysBody* lastBall = balls.getLast()->data;
+        if (lastBall != nullptr) {
+            App->physics->world->DestroyBody(lastBall->body);
+            balls.del(balls.getLast());
+        }
+    }
 }
