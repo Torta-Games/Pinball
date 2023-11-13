@@ -170,7 +170,7 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::LoadMap()
 {
-	Pinball = (App->physics->CreateChain(0, 0, pinball, 338, b2BodyType::b2_staticBody));
+	Pinball = (App->physics->CreateChain(0, 0, pinball, 603, b2BodyType::b2_staticBody));
 
 	Abajo_Derecha = (App->physics->CreateChain(0, 0, abajo_derecha, 36, b2BodyType::b2_staticBody));
 	Abajo_Derecha->listener = this;
@@ -193,6 +193,9 @@ void ModuleSceneIntro::LoadMap()
 	Boing_2 = (App->physics->CreateChain(0, 0, boing2, 10, b2BodyType::b2_staticBody));
 	Boing_3 = (App->physics->CreateChain(0, 0, boing3, 14, b2BodyType::b2_staticBody));
 	Boing_4 = (App->physics->CreateChain(0, 0, boing4, 14, b2BodyType::b2_staticBody));
+
+	circulo1 = (App->physics->CreateCircle(19, 334, 7, b2BodyType::b2_staticBody));
+	circulo2 = (App->physics->CreateCircle(161, 99, 7, b2BodyType::b2_staticBody));
 
 	boxes.add(App->physics->CreateRectangleSensor(230, 800, 220, 2));
 	boxes.getLast()->data->listener = this;
