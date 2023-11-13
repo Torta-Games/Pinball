@@ -171,12 +171,29 @@ update_status ModuleSceneIntro::Update()
 void ModuleSceneIntro::LoadMap()
 {
 	Pinball = (App->physics->CreateChain(0, 0, pinball, 338, b2BodyType::b2_staticBody));
+
 	Abajo_Derecha = (App->physics->CreateChain(0, 0, abajo_derecha, 36, b2BodyType::b2_staticBody));
 	Abajo_Derecha->listener = this;
 	Abajo_Derecha->ctype = ColliderType::TRIANGLE_RIGHT;
+	
 	Abajo_Izquierda = (App->physics->CreateChain(0, 0, abajo_izquierda, 34, b2BodyType::b2_staticBody));
 	Abajo_Izquierda->listener = this;
 	Abajo_Izquierda->ctype = ColliderType::TRIANGLE_LEFT;
+
+	Propulsor_1 = (App->physics->CreateChain(0, 0, propulsor1, 10, b2BodyType::b2_staticBody));
+	Propulsor_2 = (App->physics->CreateChain(0, 0, propulsor2, 12, b2BodyType::b2_staticBody));
+	Propulsor_3 = (App->physics->CreateChain(0, 0, propulsor3, 12, b2BodyType::b2_staticBody));
+
+	Palo_1 = (App->physics->CreateChain(0, 0, palo1, 24, b2BodyType::b2_staticBody));
+	Palo_2= (App->physics->CreateChain(0, 0, palo2, 26, b2BodyType::b2_staticBody));
+	Palo_3 = (App->physics->CreateChain(0, 0, palo3, 26, b2BodyType::b2_staticBody));
+	Palo_4 = (App->physics->CreateChain(0, 0, palo4, 28, b2BodyType::b2_staticBody));
+
+	Boing_1 = (App->physics->CreateChain(0, 0, boing1, 14, b2BodyType::b2_staticBody));
+	Boing_2 = (App->physics->CreateChain(0, 0, boing2, 10, b2BodyType::b2_staticBody));
+	Boing_3 = (App->physics->CreateChain(0, 0, boing3, 14, b2BodyType::b2_staticBody));
+	Boing_4 = (App->physics->CreateChain(0, 0, boing4, 14, b2BodyType::b2_staticBody));
+
 	boxes.add(App->physics->CreateRectangleSensor(230, 800, 220, 2));
 	boxes.getLast()->data->listener = this;
 	boxes.getLast()->data->ctype = ColliderType::SENSOR;
