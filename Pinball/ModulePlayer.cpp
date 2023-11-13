@@ -54,6 +54,7 @@ update_status ModulePlayer::Update()
 		c = c->next;
 	}
 
+	LOG("%i", score);
 	return UPDATE_CONTINUE;
 }
 
@@ -80,9 +81,19 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ColliderType::CIRCLE_1000:
 		App->scene->circle1000Colliding = true;
+		score += 1000;
 		break;
 	case ColliderType::CIRCLE_500:
 		App->scene->circle500Colliding = true;
+		score += 500;
+		break;
+	case ColliderType::CIRCLE_200:
+		App->scene->circle200Colliding = true;
+		score += 200;
+		break;
+	case ColliderType::CIRCLE_100:
+		App->scene->circle100Colliding = true;
+		score += 100;
 		break;
 	}
 }

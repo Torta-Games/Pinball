@@ -18,7 +18,9 @@ enum class ColliderType {
 	TRIANGLE_LEFT,
 	TRIANGLE_RIGHT,
 	CIRCLE_1000,
-	CIRCLE_500
+	CIRCLE_500,
+	CIRCLE_200,
+	CIRCLE_100
 	// ..
 };
 

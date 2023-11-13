@@ -30,12 +30,41 @@ bool ModuleScene::Start()
 	glow1000Texture = App->textures->Load("pinball/glow_1000_points.png");
 	glowLeftTexture = App->textures->Load("pinball/glow_abajo_izquierdo.png");
 	glowRightTexture = App->textures->Load("pinball/glow_abajo_derecho.png");
-	springPosition = iPoint(461, 676);
-	springBody = App->physics->CreateRectangle(springPosition.x, springPosition.y, 21, 94, b2_kinematicBody);
+	arrowLightsTexture = App->textures->Load("pinball/light_arrow.png");
+
+	arrowLights.PushBack({ 0,0,480,800 });
+	arrowLights.PushBack({ 480,0,480,800 });
+	arrowLights.PushBack({ 960,0,480,800 });
+	arrowLights.PushBack({ 1440,0,480,800 });
+	arrowLights.PushBack({ 1920,0,480,800 });
+	arrowLights.speed = 0.1f;
+	arrowLights.loop = true;
+
+	currentAnim = &arrowLights;
+
+	springPosition = iPoint(461, 700);
+	springBody = App->physics->CreateRectangle(springPosition.x, springPosition.y, 21, 16, b2_dynamicBody);
+	springDown = App->physics->CreateRectangle(springPosition.x, springPosition.y + 40, 21, 20, b2_staticBody);
+	b2DistanceJointDef distanceSpringJoint;
+	distanceSpringJoint.bodyA = springBody->body;
+	distanceSpringJoint.bodyB = springDown->body;
+	distanceSpringJoint.localAnchorA.Set(0, 0);
+	distanceSpringJoint.localAnchorB.Set(0, 0);
+	distanceSpringJoint.length = 2.0f;
+	distanceSpringJoint.collideConnected = false;
+	distanceSpringJoint.frequencyHz = 8.0f;
+	distanceSpringJoint.dampingRatio = 0.2f;
+	b2PrismaticJoint* springJoint = (b2PrismaticJoint*)App->physics->world->CreateJoint(&distanceSpringJoint);
+
 	circle1000Body = App->physics->CreateCircle(199, 223, 22, b2_kinematicBody);
 	circle1000Body->ctype = ColliderType::CIRCLE_1000;
 	circle500Body = App->physics->CreateCircle(188, 302, 25, b2_kinematicBody);
 	circle500Body->ctype = ColliderType::CIRCLE_500;
+	circle200Body = App->physics->CreateCircle(282, 220, 25, b2_kinematicBody);
+	circle200Body->ctype = ColliderType::CIRCLE_200;
+	circle100Body = App->physics->CreateCircle(284, 315, 32, b2_kinematicBody);
+	circle100Body->ctype = ColliderType::CIRCLE_100;
+
 	return ret;
 }
 
@@ -50,35 +79,52 @@ bool ModuleScene::CleanUp()
 // Update: draw background
 update_status ModuleScene::Update()
 {
-	b2Vec2 vel = springBody->body->GetLinearVelocity();
+	//b2Vec2 vel = springBody->body->GetLinearVelocity();
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && springPosition.y < 700)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
-		vel.y++;
+		if (springForce < 360) {
+			springForce += 10;
+		}
+		springBody->body->ApplyForceToCenter(b2Vec2(0, springForce), 1);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && springPosition.y > 676)
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		vel.y-=2;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && springPosition.y >= 700 
-		|| App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && springPosition.y <= 676)
-	{
-		vel.SetZero();
+		springForce = 0;
 	}
 
 	rotation--;
 
-	springBody->body->SetLinearVelocity(vel);
+	//springBody->body->SetLinearVelocity(vel);
 
 	springPosition = iPoint(METERS_TO_PIXELS(springBody->body->GetPosition().x), METERS_TO_PIXELS(springBody->body->GetPosition().y));
 
 	App->renderer->Blit(backgroundTexture, 0, 0);
-	App->renderer->Blit(springTexture, springPosition.x-10, springPosition.y-47);
+	App->renderer->Blit(springTexture, springPosition.x-10, springPosition.y-8);
 	App->renderer->Blit(rotatingLightsTexture, 125, 150, NULL, 1.0f, rotation);
-	//App->renderer->Blit(backgroundTexture2, 0, 0);
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_REPEAT) App->renderer->Blit(glow100Texture, 0, 0);
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_REPEAT) App->renderer->Blit(glow200Texture, 0, 0);
+	App->renderer->Blit(backgroundTexture2, 0, 0);
+	if (circle100Colliding)
+	{
+		if (timer == 0) timer = SDL_GetTicks();
+
+		if (SDL_GetTicks() - timer >= 200)
+		{
+			timer = 0;
+			circle100Colliding = false;
+		}
+		else App->renderer->Blit(glow100Texture, 0, 0);
+	}
+	if (circle200Colliding)
+	{
+		if (timer == 0) timer = SDL_GetTicks();
+
+		if (SDL_GetTicks() - timer >= 200)
+		{
+			timer = 0;
+			circle200Colliding = false;
+		}
+		else App->renderer->Blit(glow200Texture, 0, 0);
+	}
 	if (circle500Colliding)
 	{
 		if (timer == 0) timer = SDL_GetTicks();
@@ -123,6 +169,10 @@ update_status ModuleScene::Update()
 		}
 		else App->renderer->Blit(glowRightTexture, 0, 0);
 	}
+
+	currentAnim->Update();
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	App->renderer->Blit(arrowLightsTexture, 0, 0, &rect);
 
 	return UPDATE_CONTINUE;
 }

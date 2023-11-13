@@ -4,6 +4,7 @@
 #include "p2Point.h"
 #include "Globals.h"
 #include "ModuleTextures.h"
+#include "Animation.h"
 
 
 class ModuleScene : public Module
@@ -22,6 +23,8 @@ public:
 	bool rightTriangleColliding = false;
 	bool circle1000Colliding = false;
 	bool circle500Colliding = false;
+	bool circle200Colliding = false;
+	bool circle100Colliding = false;
 	float timer = 0;
 
 private:
@@ -37,9 +40,18 @@ private:
 	SDL_Texture* glowRightTexture;
 
 	PhysBody* springBody;
+	PhysBody* springDown;
 	PhysBody* circle1000Body;
 	PhysBody* circle500Body;
+	PhysBody* circle200Body;
+	PhysBody* circle100Body;
 	iPoint springPosition;
+
+	Animation* currentAnim;
+	Animation arrowLights;
+	SDL_Texture* arrowLightsTexture;
+
+	int springForce = 0;
 
 	double rotation = 0;
 
