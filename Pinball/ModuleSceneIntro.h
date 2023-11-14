@@ -45,6 +45,8 @@ public:
 	PhysBody* circulo2;
 
 
+
+
 	PhysBody* sensor;
 	bool sensed;
 

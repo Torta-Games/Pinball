@@ -68,6 +68,10 @@ bool ModulePlayer::CleanUp()
 
 void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+	b2Vec2 impulseDirection = bodyA->body->GetPosition() - bodyB->body->GetPosition();
+	impulseDirection.Normalize();
+	float impulseMagnitude = 1.5f;
+
 	switch (bodyB->ctype)
 	{
 	case ColliderType::SENSOR:
@@ -75,25 +79,31 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ColliderType::TRIANGLE_LEFT:
 		App->scene->leftTriangleColliding = true;
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::TRIANGLE_RIGHT:
 		App->scene->rightTriangleColliding = true;
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::CIRCLE_1000:
 		App->scene->circle1000Colliding = true;
 		score += 1000;
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::CIRCLE_500:
 		App->scene->circle500Colliding = true;
 		score += 500;
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::CIRCLE_200:
 		App->scene->circle200Colliding = true;
 		score += 200;
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::CIRCLE_100:
 		App->scene->circle100Colliding = true;
 		score += 100;
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	}
 }
