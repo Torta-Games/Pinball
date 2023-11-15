@@ -32,6 +32,7 @@ bool ModuleScene::Start()
 	glowRightTexture = App->textures->Load("pinball/glow_abajo_derecho.png");
 	arrowLightsTexture = App->textures->Load("pinball/light_arrow.png");
 	rightFlipperTexture = App->textures->Load("pinball/flipper_right.png");
+	blueLightTexture = App->textures->Load("pinball/BlueLight/blue_light.png");
 
 	arrowLights.PushBack({ 0,0,480,800 });
 	arrowLights.PushBack({ 480,0,480,800 });
@@ -41,7 +42,31 @@ bool ModuleScene::Start()
 	arrowLights.speed = 0.1f;
 	arrowLights.loop = true;
 
+	blueLightAnim.PushBack({0,0,160,160});
+	blueLightAnim.PushBack({160,0,160,160 });
+	blueLightAnim.PushBack({320,0,160,160 });
+	blueLightAnim.PushBack({480,0,160,160});
+	blueLightAnim.PushBack({640,0,160,160});
+	blueLightAnim.PushBack({800,0,160,160});
+	blueLightAnim.PushBack({960,0,160,160});
+	blueLightAnim.PushBack({1120,0,160,160});
+	blueLightAnim.PushBack({1280,0,160,160});
+	blueLightAnim.PushBack({1440,0,160,160});
+	blueLightAnim.PushBack({1280,0,160,160});
+	blueLightAnim.PushBack({1120,0,160,160});
+	blueLightAnim.PushBack({960,0,160,160});
+	blueLightAnim.PushBack({800,0,160,160});
+	blueLightAnim.PushBack({640,0,160,160});
+	blueLightAnim.PushBack({480,0,160,160});
+	blueLightAnim.PushBack({320,0,160,160 });
+	blueLightAnim.PushBack({160,0,160,160 });
+	blueLightAnim.PushBack({0,0,160,160});
+	blueLightAnim.speed=0.5f;
+	blueLightAnim.loop = true;
+
+	
 	currentAnim = &arrowLights;
+	currentAnimBlueLight = &blueLightAnim;
 
 	flipperPosition = iPoint(300, 750);
 	flipperBody = App->physics->CreateRectangle(flipperPosition.x, flipperPosition.y, 90, 16, b2_dynamicBody);
@@ -128,6 +153,7 @@ update_status ModuleScene::Update()
 	App->renderer->Blit(springTexture, springPosition.x-10, springPosition.y-8);
 	App->renderer->Blit(rotatingLightsTexture, 125, 150, NULL, 1.0f, rotation);
 	App->renderer->Blit(backgroundTexture2, 0, 0);
+
 	if (circle100Colliding)
 	{
 		if (timer == 0) timer = SDL_GetTicks();
@@ -196,10 +222,14 @@ update_status ModuleScene::Update()
 	}
 
 	App->renderer->Blit(rightFlipperTexture, flipperPosition.x - 40, flipperPosition.y - 25, NULL, 0, flipperBody->GetRotation() + 30, 42, 24);
+	currentAnimBlueLight->Update();
 
 	currentAnim->Update();
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 	App->renderer->Blit(arrowLightsTexture, 0, 0, &rect);
+	SDL_Rect rect2 = currentAnimBlueLight->GetCurrentFrame();
+	App->renderer->Blit(blueLightTexture, 10, 383, &rect2);
+
 
 	return UPDATE_CONTINUE;
 }

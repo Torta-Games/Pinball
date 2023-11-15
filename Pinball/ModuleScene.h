@@ -56,6 +56,11 @@ private:
 	Animation arrowLights;
 	SDL_Texture* arrowLightsTexture;
 
+
+	Animation* currentAnimBlueLight;
+	Animation blueLightAnim;
+	SDL_Texture* blueLightTexture;
+
 	int springForce = 0;
 
 	double rotation = 0;
