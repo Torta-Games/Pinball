@@ -38,6 +38,10 @@ private:
 	SDL_Texture* glow1000Texture;
 	SDL_Texture* glowLeftTexture;
 	SDL_Texture* glowRightTexture;
+	SDL_Texture* rightFlipperTexture;
+
+	PhysBody* flipperBody;
+	PhysBody* flipperPoint;
 
 	PhysBody* springBody;
 	PhysBody* springDown;
@@ -46,6 +50,7 @@ private:
 	PhysBody* circle200Body;
 	PhysBody* circle100Body;
 	iPoint springPosition;
+	iPoint flipperPosition;
 
 	Animation* currentAnim;
 	Animation arrowLights;
@@ -55,4 +60,5 @@ private:
 
 	double rotation = 0;
 
+	int x, y = 0;
 };

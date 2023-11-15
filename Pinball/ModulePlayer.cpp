@@ -70,7 +70,7 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	b2Vec2 impulseDirection = bodyA->body->GetPosition() - bodyB->body->GetPosition();
 	impulseDirection.Normalize();
-	float impulseMagnitude = 1.5f;
+	float impulseMagnitude = 1.0f;
 
 	switch (bodyB->ctype)
 	{
@@ -103,6 +103,9 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderType::CIRCLE_100:
 		App->scene->circle100Colliding = true;
 		score += 100;
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		break;
+	case ColliderType::FLIPPER:
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	}

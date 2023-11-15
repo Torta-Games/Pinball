@@ -31,6 +31,7 @@ bool ModuleScene::Start()
 	glowLeftTexture = App->textures->Load("pinball/glow_abajo_izquierdo.png");
 	glowRightTexture = App->textures->Load("pinball/glow_abajo_derecho.png");
 	arrowLightsTexture = App->textures->Load("pinball/light_arrow.png");
+	rightFlipperTexture = App->textures->Load("pinball/flipper_right.png");
 
 	arrowLights.PushBack({ 0,0,480,800 });
 	arrowLights.PushBack({ 480,0,480,800 });
@@ -41,6 +42,23 @@ bool ModuleScene::Start()
 	arrowLights.loop = true;
 
 	currentAnim = &arrowLights;
+
+	flipperPosition = iPoint(300, 750);
+	flipperBody = App->physics->CreateRectangle(flipperPosition.x, flipperPosition.y, 90, 16, b2_dynamicBody);
+	flipperBody->ctype = ColliderType::FLIPPER;
+	flipperPoint = App->physics->CreateCircle(flipperPosition.x, flipperPosition.y, 2, b2_staticBody);
+
+	b2RevoluteJointDef flipperJointDef;
+	flipperJointDef.bodyA = flipperBody->body;
+	flipperJointDef.bodyB = flipperPoint->body;
+	flipperJointDef.referenceAngle = 0;
+	flipperJointDef.enableLimit = true;
+	flipperJointDef.lowerAngle = DEGTORAD * (-30);
+	flipperJointDef.upperAngle = DEGTORAD * (30);
+	flipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(35), 0);
+	flipperJointDef.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* flipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&flipperJointDef);
+
 
 	springPosition = iPoint(461, 700);
 	springBody = App->physics->CreateRectangle(springPosition.x, springPosition.y, 21, 16, b2_dynamicBody);
@@ -81,16 +99,22 @@ update_status ModuleScene::Update()
 {
 	//b2Vec2 vel = springBody->body->GetLinearVelocity();
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		if (springForce < 360) {
 			springForce += 10;
 		}
 		springBody->body->ApplyForceToCenter(b2Vec2(0, springForce), 1);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 	{
 		springForce = 0;
+	}
+
+	//control the flipper using right arrow key
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		flipperBody->body->ApplyForceToCenter(b2Vec2(0, -50), 1);
 	}
 
 	rotation--;
@@ -98,6 +122,7 @@ update_status ModuleScene::Update()
 	//springBody->body->SetLinearVelocity(vel);
 
 	springPosition = iPoint(METERS_TO_PIXELS(springBody->body->GetPosition().x), METERS_TO_PIXELS(springBody->body->GetPosition().y));
+	flipperPosition = iPoint(METERS_TO_PIXELS(flipperBody->body->GetPosition().x), METERS_TO_PIXELS(flipperBody->body->GetPosition().y));
 
 	App->renderer->Blit(backgroundTexture, 0, 0);
 	App->renderer->Blit(springTexture, springPosition.x-10, springPosition.y-8);
@@ -169,6 +194,8 @@ update_status ModuleScene::Update()
 		}
 		else App->renderer->Blit(glowRightTexture, 0, 0);
 	}
+
+	App->renderer->Blit(rightFlipperTexture, flipperPosition.x - 40, flipperPosition.y - 25, NULL, 0, flipperBody->GetRotation() + 30, 42, 24);
 
 	currentAnim->Update();
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
