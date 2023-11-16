@@ -21,12 +21,8 @@ bool ModuleRender::Init()
 {
 	LOG("Creating Renderer context");
 	bool ret = true;
-	Uint32 flags = 0;
 
-	if(VSYNC == true)
-	{
-		flags |= SDL_RENDERER_PRESENTVSYNC;
-	}
+	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
 	renderer = SDL_CreateRenderer(App->window->window, -1, flags);
 	

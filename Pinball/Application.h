@@ -2,6 +2,8 @@
 
 #include "p2List.h"
 #include "Globals.h"
+#include "Timer.h"
+#include "PerfTimer.h"
 
 class Module;
 class ModuleRender;
@@ -43,4 +45,22 @@ public:
 private:
 
 	void AddModule(Module* mod);
+
+	uint frames;
+	float dt;
+
+	Timer startupTime;
+	PerfTimer frameTime;
+	PerfTimer lastSecFrameTime;
+
+	uint64 frameCount = 0;
+	uint32 framesPerSecond = 0;
+	uint32 lastSecFrameCount = 0;
+
+	float averageFps = 0.0f;
+	uint32 secondsSinceStartup = 0;
+
+	uint32 maxFrameDuration = 16;
+
+	bool fpsCap = true;
 };

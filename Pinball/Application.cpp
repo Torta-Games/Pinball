@@ -14,6 +14,12 @@
 
 Application::Application()
 {
+	Timer timer = Timer();
+	startupTime = Timer();
+	frameTime = PerfTimer();
+	lastSecFrameTime = PerfTimer();
+	frames = 0;
+
 	renderer = new ModuleRender(this);
 	window = new ModuleWindow(this);
 	textures = new ModuleTextures(this);
@@ -112,6 +118,47 @@ update_status Application::Update()
 			ret = item->data->PostUpdate();
 		item = item->next;
 	}
+
+	if (input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) fpsCap = !fpsCap;
+
+	if (fpsCap) maxFrameDuration = 16;
+	else maxFrameDuration = 32;
+
+	frameTime.Start();
+
+	double currentDt = frameTime.ReadMs();
+	if (maxFrameDuration > 0 && currentDt < maxFrameDuration) {
+		uint32 delay = (uint32)(maxFrameDuration - currentDt);
+
+		PerfTimer delayTimer = PerfTimer();
+		SDL_Delay(delay);
+	}
+
+	// Amount of frames since startup
+	frameCount++;
+
+	// Amount of time since game start (use a low resolution timer)
+	secondsSinceStartup = startupTime.ReadSec();
+
+	// Amount of ms took the last update (dt)
+	dt = (float)frameTime.ReadMs();
+
+	// Amount of frames during the last second
+	lastSecFrameCount++;
+
+	// Average FPS for the whole game life
+	if (lastSecFrameTime.ReadMs() > 1000) {
+		lastSecFrameTime.Start();
+		averageFps = (averageFps + lastSecFrameCount) / 2;
+		framesPerSecond = lastSecFrameCount;
+		lastSecFrameCount = 0;
+	}
+
+	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %I32u Frame Count: %I64u ",
+		averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
+
+	window->SetTitle(title);
 
 	return ret;
 }
