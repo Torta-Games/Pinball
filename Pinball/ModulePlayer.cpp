@@ -79,11 +79,11 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ColliderType::TRIANGLE_LEFT:
 		App->scene->leftTriangleColliding = true;
-		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		//bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::TRIANGLE_RIGHT:
 		App->scene->rightTriangleColliding = true;
-		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		//bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::CIRCLE_1000:
 		App->scene->circle1000Colliding = true;
@@ -106,7 +106,13 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::FLIPPER:
-		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * 2 * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		break;
+	case ColliderType::CIRCLE_TP1:
+		bodyA->body->SetTransform(b2Vec2(PIXEL_TO_METERS(100), PIXEL_TO_METERS(100)), 0);
+		break;
+	case ColliderType::CIRCLE_TP2:
+		bodyA->body->SetTransform(b2Vec2(PIXEL_TO_METERS(100), PIXEL_TO_METERS(100)), 0);
 		break;
 	}
 }

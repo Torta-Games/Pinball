@@ -68,8 +68,8 @@ bool ModuleScene::Start()
 	currentAnim = &arrowLights;
 	currentAnimBlueLight = &blueLightAnim;
 
-	flipperPosition = iPoint(300, 750);
-	flipperBody = App->physics->CreateRectangle(flipperPosition.x, flipperPosition.y, 90, 16, b2_dynamicBody);
+	flipperPosition = iPoint(328, 740);
+	flipperBody = App->physics->CreateRectangle(flipperPosition.x, flipperPosition.y, 70, 16, b2_dynamicBody);
 	flipperBody->ctype = ColliderType::FLIPPER;
 	flipperPoint = App->physics->CreateCircle(flipperPosition.x, flipperPosition.y, 2, b2_staticBody);
 
@@ -80,7 +80,7 @@ bool ModuleScene::Start()
 	flipperJointDef.enableLimit = true;
 	flipperJointDef.lowerAngle = DEGTORAD * (-30);
 	flipperJointDef.upperAngle = DEGTORAD * (30);
-	flipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(35), 0);
+	flipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(45), 0);
 	flipperJointDef.localAnchorB.Set(0, 0);
 	b2RevoluteJoint* flipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&flipperJointDef);
 
@@ -221,7 +221,7 @@ update_status ModuleScene::Update()
 		else App->renderer->Blit(glowRightTexture, 0, 0);
 	}
 
-	App->renderer->Blit(rightFlipperTexture, flipperPosition.x - 40, flipperPosition.y - 25, NULL, 0, flipperBody->GetRotation() + 30, 42, 24);
+	App->renderer->Blit(rightFlipperTexture, flipperPosition.x - 32, flipperPosition.y - 32, NULL, 0, flipperBody->GetRotation() + 30, 34, 31);
 	currentAnimBlueLight->Update();
 
 	currentAnim->Update();

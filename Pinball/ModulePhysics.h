@@ -20,7 +20,9 @@ enum class ColliderType {
 	CIRCLE_1000,
 	CIRCLE_500,
 	CIRCLE_200,
-	CIRCLE_100
+	CIRCLE_100,
+	CIRCLE_TP1,
+	CIRCLE_TP2,
 	// ..
 };
 

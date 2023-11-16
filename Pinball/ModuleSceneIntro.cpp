@@ -139,7 +139,11 @@ void ModuleSceneIntro::LoadMap()
 	Boing_4 = (App->physics->CreateChain(0, 0, boing4, 14, b2BodyType::b2_staticBody));
 
 	circulo1 = (App->physics->CreateCircle(19, 334, 7, b2BodyType::b2_staticBody));
+	circulo1->body->GetFixtureList()->SetSensor(true);
+	circulo1->ctype = ColliderType::CIRCLE_TP1;
 	circulo2 = (App->physics->CreateCircle(161, 99, 7, b2BodyType::b2_staticBody));
+	circulo2->body->GetFixtureList()->SetSensor(true);
+	circulo2->ctype = ColliderType::CIRCLE_TP2;
 
 	boxes.add(App->physics->CreateRectangleSensor(230, 800, 220, 2));
 	boxes.getLast()->data->listener = this;
