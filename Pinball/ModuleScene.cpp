@@ -33,6 +33,7 @@ bool ModuleScene::Start()
 	arrowLightsTexture = App->textures->Load("pinball/light_arrow.png");
 	rightFlipperTexture = App->textures->Load("pinball/flipper_right.png");
 	blueLightTexture = App->textures->Load("pinball/BlueLight/blue_light.png");
+	circleTexture= App->textures->Load("pinball/circles_points.png");
 
 	arrowLights.PushBack({ 0,0,480,800 });
 	arrowLights.PushBack({ 480,0,480,800 });
@@ -153,6 +154,7 @@ update_status ModuleScene::Update()
 	App->renderer->Blit(springTexture, springPosition.x-10, springPosition.y-8);
 	App->renderer->Blit(rotatingLightsTexture, 125, 150, NULL, 1.0f, rotation);
 	App->renderer->Blit(backgroundTexture2, 0, 0);
+	App->renderer->Blit(circleTexture, 0, 0);
 
 	if (circle100Colliding)
 	{
