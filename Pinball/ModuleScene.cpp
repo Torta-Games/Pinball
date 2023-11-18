@@ -327,13 +327,23 @@ update_status ModuleScene::Update()
 
 
 	string scoreString = to_string(App->player->score);
-	int xPos = 97 - (scoreString.size() * 8);
+	int scoreXPos = 97 - (scoreString.size() * 8);
 
 	for (unsigned int i = 0; i < scoreString.size(); i++)
 	{
 		int digit = scoreString[i] - '0';
 
-		App->renderer->Blit(numsTexture, xPos + (i * 8), 10, &scoreRect[digit], 0.0f);
+		App->renderer->Blit(numsTexture, scoreXPos + (i * 8), 20, &scoreRect[digit], 0.0f);
+	}
+
+	string highScoreString = to_string(highScore);
+	int highScoreXPos = 430 - (highScoreString.size() * 8);
+
+	for (unsigned int i = 0; i < highScoreString.size(); i++)
+	{
+		int digit = highScoreString[i] - '0';
+
+		App->renderer->Blit(numsTexture, highScoreXPos + (i * 8), 40, &scoreRect[digit], 0.0f);
 	}
 
 	return UPDATE_CONTINUE;
