@@ -5,6 +5,8 @@
 #include "Globals.h"
 #include "ModuleTextures.h"
 #include "Animation.h"
+#include <fstream>
+using namespace std;
 
 
 class ModuleScene : public Module
@@ -69,10 +71,17 @@ private:
 	SDL_Texture* blueLightTexture;
 
 	SDL_Texture* circleTexture;
+	SDL_Texture* numsTexture;
+
+	SDL_Rect scoreRect[10];
 
 	int springForce = 0;
 
 	double rotation = 0;
 
 	int x, y = 0;
+
+	int highScore = 0;
+
+	fstream scoreFile;
 };

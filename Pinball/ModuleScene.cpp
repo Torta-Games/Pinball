@@ -6,6 +6,9 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "ModulePlayer.h"
+#include <iostream>
+#include <string>
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -35,6 +38,7 @@ bool ModuleScene::Start()
 	leftFlipperTexture = App->textures->Load("pinball/flipper_left.png");
 	blueLightTexture = App->textures->Load("pinball/BlueLight/blue_light.png");
 	circleTexture = App->textures->Load("pinball/circles_points.png");
+	numsTexture = App->textures->Load("pinball/nums.png");
 
 	arrowLights.PushBack({ 0,0,480,800 });
 	arrowLights.PushBack({ 480,0,480,800 });
@@ -130,6 +134,17 @@ bool ModuleScene::Start()
 	circle100Body = App->physics->CreateCircle(284, 315, 32, b2_kinematicBody);
 	circle100Body->ctype = ColliderType::CIRCLE_100;
 
+	scoreFile.open("score.txt", ios::in);
+	scoreFile >> highScore;
+	cout << highScore;
+	scoreFile.close();
+	LOG("%i", highScore);
+
+	for (int i = 0; i < 10; i++)
+	{
+		scoreRect[i] = { 1 + 8 * i, 81, 7, 8 };
+	}
+
 	return ret;
 }
 
@@ -144,6 +159,14 @@ bool ModuleScene::CleanUp()
 // Update: draw background
 update_status ModuleScene::Update()
 {
+	if (App->player->score > highScore)
+	{
+		highScore = App->player->score;
+		scoreFile.open("score.txt", ios::out);
+		scoreFile.seekp(0);
+		scoreFile << highScore;
+		scoreFile.close();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
@@ -161,16 +184,14 @@ update_status ModuleScene::Update()
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
 		rightFlipperActivated = true;
-		rightFlipperBody->body->ApplyForceToCenter(b2Vec2(0, -500), true);
+		rightFlipperBody->body->ApplyForceToCenter(b2Vec2(0, -1000), true);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
 		leftFlipperActivated = true;
-		leftFlipperBody->body->ApplyForceToCenter(b2Vec2(0, -500), true);
+		leftFlipperBody->body->ApplyForceToCenter(b2Vec2(0, -1000), true);
 	}
-
-	LOG("%f", leftFlipperBody->GetRotation());
 
 	rotation--;
 
@@ -262,6 +283,16 @@ update_status ModuleScene::Update()
 	SDL_Rect rect2 = currentAnimBlueLight->GetCurrentFrame();
 	App->renderer->Blit(blueLightTexture, 10, 383, &rect2);
 
+
+	string scoreString = to_string(App->player->score);
+	int xPos = 97 - (scoreString.size() * 8);
+
+	for (unsigned int i = 0; i < scoreString.size(); i++)
+	{
+		int digit = scoreString[i] - '0';
+
+		App->renderer->Blit(numsTexture, xPos + (i * 8), 10, &scoreRect[digit], 0.0f);
+	}
 
 	return UPDATE_CONTINUE;
 }

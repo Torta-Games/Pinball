@@ -66,7 +66,7 @@ update_status ModulePlayer::Update()
 		c = c->next;
 	}
 
-	LOG("%i", score);
+	//LOG("%i", score);
 	return UPDATE_CONTINUE;
 }
 
