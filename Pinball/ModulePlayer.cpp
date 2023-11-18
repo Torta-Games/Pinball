@@ -47,13 +47,13 @@ update_status ModulePlayer::Update()
 	if (canTp1)
 	{
 		canTp1 = false;
-		balls.getLast()->data->body->SetTransform(b2Vec2(PIXEL_TO_METERS(100), PIXEL_TO_METERS(100)), 0);
+		balls.getLast()->data->body->SetTransform(b2Vec2(PIXEL_TO_METERS(390), PIXEL_TO_METERS(554)), 0);
 	}
 
 	if (canTp2)
 	{
 		canTp2 = false;
-		balls.getLast()->data->body->SetTransform(b2Vec2(PIXEL_TO_METERS(100), PIXEL_TO_METERS(100)), 0);
+		balls.getLast()->data->body->SetTransform(b2Vec2(PIXEL_TO_METERS(60), PIXEL_TO_METERS(554)), 0);
 	}
 
 	p2List_item<PhysBody*>* c = balls.getFirst();

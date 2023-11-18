@@ -15,6 +15,9 @@
 ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	world = NULL;
+	mouse_joint = NULL;
+	mouse_body = NULL;
+	ground = NULL;
 	debug = false;
 }
 
@@ -29,6 +32,9 @@ bool ModulePhysics::Start()
 
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
 	world->SetContactListener(this);
+
+	b2BodyDef bd;
+	ground = world->CreateBody(&bd);
 
 	return true;
 }
@@ -267,9 +273,58 @@ update_status ModulePhysics::PostUpdate()
 				break;
 			}
 
-			// TODO 1: If mouse button 1 is pressed ...
-			// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
-			// test if the current body contains mouse position
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+
+				b2Vec2 p = { PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()) };
+				if (f->GetShape()->TestPoint(b->GetTransform(), p) == true)
+				{
+
+					mouse_body = b;
+
+					b2Vec2 mousePosition;
+					mousePosition.x = p.x;
+					mousePosition.y = p.y;
+
+					b2MouseJointDef def;
+					def.bodyA = ground; 
+					def.bodyB = mouse_body; 
+					def.target = mousePosition; 
+					def.dampingRatio = 0.5f;
+					def.frequencyHz = 2.0f;
+					def.maxForce = 200.0f * mouse_body->GetMass();
+
+					mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
+				}
+			}
+
+			if (mouse_body != nullptr && mouse_joint != nullptr)
+			{
+				if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+				{
+					// Get new mouse position and re-target mouse_joint there
+					b2Vec2 mousePosition;
+					mousePosition.x = PIXEL_TO_METERS(App->input->GetMouseX());
+					mousePosition.y = PIXEL_TO_METERS(App->input->GetMouseY());
+					mouse_joint->SetTarget(mousePosition);
+
+					// Draw a red line between both anchor points
+					App->renderer->DrawLine(METERS_TO_PIXELS(mouse_body->GetPosition().x), METERS_TO_PIXELS(mouse_body->GetPosition().y), App->input->GetMouseX(), App->input->GetMouseY(), 255, 0, 0);
+				}
+			}
+
+			if (mouse_body != nullptr && mouse_joint != nullptr)
+			{
+				if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP)
+				{
+					// Tell Box2D to destroy the mouse_joint
+					world->DestroyJoint(mouse_joint);
+
+					// DO NOT FORGET THIS! We need it for the "if (mouse_body != nullptr && mouse_joint != nullptr)"
+					mouse_joint = nullptr;
+					mouse_body = nullptr;
+				}
+			}
 		}
 	}
 

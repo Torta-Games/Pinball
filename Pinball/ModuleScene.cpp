@@ -185,6 +185,23 @@ update_status ModuleScene::Update()
 		scoreFile.close();
 	}
 
+	// Prepare for raycast ------------------------------------------------------
+
+	iPoint mouse;
+	mouse.x = App->input->GetMouseX();
+	mouse.y = App->input->GetMouseY();
+	int ray_hit = ray.DistanceTo(mouse);
+	LOG("%i %i ", mouse.x, mouse.y);
+
+	fVector normal(0.0f, 0.0f);
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		ray_on = !ray_on;
+		ray.x = App->input->GetMouseX();
+		ray.y = App->input->GetMouseY();
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		if (springForce < 360) {

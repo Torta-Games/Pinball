@@ -92,4 +92,7 @@ private:
 	int highScore = 0;
 
 	fstream scoreFile;
+
+	p2Point<int> ray;
+	bool ray_on;
 };
