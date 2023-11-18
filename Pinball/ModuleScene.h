@@ -70,6 +70,14 @@ private:
 
 	SDL_Texture* circleTexture;
 
+	Animation* currentAnimRightArrow;
+	Animation rightArrowAnim;
+	SDL_Texture* rightArrowTexture;
+
+	Animation* currentAnimLeftArrow;
+	Animation leftArrowAnim;
+	SDL_Texture* leftArrowTexture;
+
 	int springForce = 0;
 
 	double rotation = 0;
