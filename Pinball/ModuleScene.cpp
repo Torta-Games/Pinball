@@ -32,6 +32,7 @@ bool ModuleScene::Start()
 	glowRightTexture = App->textures->Load("pinball/glow_abajo_derecho.png");
 	arrowLightsTexture = App->textures->Load("pinball/light_arrow.png");
 	rightFlipperTexture = App->textures->Load("pinball/flipper_right.png");
+	leftFlipperTexture = App->textures->Load("pinball/flipper_left.png");
 	blueLightTexture = App->textures->Load("pinball/BlueLight/blue_light.png");
 
 	arrowLights.PushBack({ 0,0,480,800 });
@@ -68,22 +69,42 @@ bool ModuleScene::Start()
 	currentAnim = &arrowLights;
 	currentAnimBlueLight = &blueLightAnim;
 
-	flipperPosition = iPoint(328, 740);
-	flipperBody = App->physics->CreateRectangle(flipperPosition.x, flipperPosition.y, 70, 16, b2_dynamicBody);
-	flipperBody->ctype = ColliderType::FLIPPER;
-	flipperPoint = App->physics->CreateCircle(flipperPosition.x, flipperPosition.y, 2, b2_staticBody);
+	//RIGHT FLIPPER
 
-	b2RevoluteJointDef flipperJointDef;
-	flipperJointDef.bodyA = flipperBody->body;
-	flipperJointDef.bodyB = flipperPoint->body;
-	flipperJointDef.referenceAngle = 0;
-	flipperJointDef.enableLimit = true;
-	flipperJointDef.lowerAngle = DEGTORAD * (-30);
-	flipperJointDef.upperAngle = DEGTORAD * (30);
-	flipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(45), 0);
-	flipperJointDef.localAnchorB.Set(0, 0);
-	b2RevoluteJoint* flipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&flipperJointDef);
+	rightFlipperPosition = iPoint(328, 740);
+	rightFlipperBody = App->physics->CreateRectangle(rightFlipperPosition.x, rightFlipperPosition.y, 70, 16, b2_dynamicBody);
+	rightFlipperBody->ctype = ColliderType::RIGHT_FLIPPER;
+	rightFlipperPoint = App->physics->CreateCircle(rightFlipperPosition.x, rightFlipperPosition.y, 2, b2_staticBody);
 
+	b2RevoluteJointDef rightFlipperJointDef;
+	rightFlipperJointDef.bodyA = rightFlipperBody->body;
+	rightFlipperJointDef.bodyB = rightFlipperPoint->body;
+	rightFlipperJointDef.referenceAngle = 0;
+	rightFlipperJointDef.enableLimit = true;
+	rightFlipperJointDef.lowerAngle = DEGTORAD * (-30);
+	rightFlipperJointDef.upperAngle = DEGTORAD * (30);
+	rightFlipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(45), 0);
+	rightFlipperJointDef.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* rightFlipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&rightFlipperJointDef);
+
+	//LEFT FLIPPER
+	leftFlipperPosition = iPoint(120, 740);
+	leftFlipperBody = App->physics->CreateRectangle(leftFlipperPosition.x, leftFlipperPosition.y, 70, 16, b2_dynamicBody);
+	leftFlipperBody->ctype = ColliderType::LEFT_FLIPPER;
+	leftFlipperPoint = App->physics->CreateCircle(leftFlipperPosition.x, leftFlipperPosition.y, 2, b2_staticBody);
+
+	b2RevoluteJointDef leftFlipperJointDef;
+	leftFlipperJointDef.bodyA = leftFlipperBody->body;
+	leftFlipperJointDef.bodyB = leftFlipperPoint->body;
+	leftFlipperJointDef.referenceAngle = 0;
+	leftFlipperJointDef.enableLimit = true;
+	leftFlipperJointDef.lowerAngle = DEGTORAD * (-30);
+	leftFlipperJointDef.upperAngle = DEGTORAD * (30);
+	leftFlipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(-45), 0);
+	leftFlipperJointDef.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* leftFlipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&leftFlipperJointDef);
+
+	//SPRING
 
 	springPosition = iPoint(461, 700);
 	springBody = App->physics->CreateRectangle(springPosition.x, springPosition.y, 21, 16, b2_dynamicBody);
@@ -122,7 +143,6 @@ bool ModuleScene::CleanUp()
 // Update: draw background
 update_status ModuleScene::Update()
 {
-	//b2Vec2 vel = springBody->body->GetLinearVelocity();
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
@@ -137,17 +157,25 @@ update_status ModuleScene::Update()
 	}
 
 	//control the flipper using right arrow key
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		flipperBody->body->ApplyForceToCenter(b2Vec2(0, -50), 1);
+		rightFlipperActivated = true;
+		rightFlipperBody->body->ApplyForceToCenter(b2Vec2(0, -500), true);
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		leftFlipperActivated = true;
+		leftFlipperBody->body->ApplyForceToCenter(b2Vec2(0, -500), true);
+	}
+
+	LOG("%f", leftFlipperBody->GetRotation());
 
 	rotation--;
 
-	//springBody->body->SetLinearVelocity(vel);
-
 	springPosition = iPoint(METERS_TO_PIXELS(springBody->body->GetPosition().x), METERS_TO_PIXELS(springBody->body->GetPosition().y));
-	flipperPosition = iPoint(METERS_TO_PIXELS(flipperBody->body->GetPosition().x), METERS_TO_PIXELS(flipperBody->body->GetPosition().y));
+	rightFlipperPosition = iPoint(METERS_TO_PIXELS(rightFlipperBody->body->GetPosition().x), METERS_TO_PIXELS(rightFlipperBody->body->GetPosition().y));
+	leftFlipperPosition = iPoint(METERS_TO_PIXELS(leftFlipperBody->body->GetPosition().x), METERS_TO_PIXELS(leftFlipperBody->body->GetPosition().y));
 
 	App->renderer->Blit(backgroundTexture, 0, 0);
 	App->renderer->Blit(springTexture, springPosition.x-10, springPosition.y-8);
@@ -221,7 +249,9 @@ update_status ModuleScene::Update()
 		else App->renderer->Blit(glowRightTexture, 0, 0);
 	}
 
-	App->renderer->Blit(rightFlipperTexture, flipperPosition.x - 32, flipperPosition.y - 32, NULL, 0, flipperBody->GetRotation() + 30, 34, 31);
+	App->renderer->Blit(rightFlipperTexture, rightFlipperPosition.x - 32, rightFlipperPosition.y - 32, NULL, 0, rightFlipperBody->GetRotation() + 30, 32, 32);
+	App->renderer->Blit(leftFlipperTexture, leftFlipperPosition.x - 50, leftFlipperPosition.y - 30, NULL, 0, leftFlipperBody->GetRotation() - 30, 50, 30);
+
 	currentAnimBlueLight->Update();
 
 	currentAnim->Update();

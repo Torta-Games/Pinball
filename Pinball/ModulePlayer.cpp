@@ -44,6 +44,18 @@ update_status ModulePlayer::Update()
 		DestroyBall();
 	}
 
+	if (canTp1)
+	{
+		canTp1 = false;
+		balls.getLast()->data->body->SetTransform(b2Vec2(PIXEL_TO_METERS(100), PIXEL_TO_METERS(100)), 0);
+	}
+
+	if (canTp2)
+	{
+		canTp2 = false;
+		balls.getLast()->data->body->SetTransform(b2Vec2(PIXEL_TO_METERS(100), PIXEL_TO_METERS(100)), 0);
+	}
+
 	p2List_item<PhysBody*>* c = balls.getFirst();
 
 	while (c != NULL)
@@ -105,14 +117,15 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		score += 100;
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
-	case ColliderType::FLIPPER:
-		bodyA->body->ApplyLinearImpulse(impulseMagnitude * 2 * impulseDirection, bodyA->body->GetWorldCenter(), true);
+	case ColliderType::RIGHT_FLIPPER:
+		break;
+	case ColliderType::LEFT_FLIPPER:
 		break;
 	case ColliderType::CIRCLE_TP1:
-		bodyA->body->SetTransform(b2Vec2(PIXEL_TO_METERS(100), PIXEL_TO_METERS(100)), 0);
+		canTp1 = true;
 		break;
 	case ColliderType::CIRCLE_TP2:
-		bodyA->body->SetTransform(b2Vec2(PIXEL_TO_METERS(100), PIXEL_TO_METERS(100)), 0);
+		canTp2 = true;
 		break;
 	}
 }

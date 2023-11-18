@@ -22,6 +22,8 @@ public:
 
 	bool isAlive = false;
 	bool canDestroy = false;
+	bool canTp1 = false;
+	bool canTp2 = false;
 	int ballCount = 4;
 
 	int score = 0;

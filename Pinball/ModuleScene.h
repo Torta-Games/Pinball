@@ -27,6 +27,9 @@ public:
 	bool circle100Colliding = false;
 	float timer = 0;
 
+	bool rightFlipperActivated = false;
+	bool leftFlipperActivated = false;
+
 private:
 	SDL_Texture* backgroundTexture;
 	SDL_Texture* backgroundTexture2;
@@ -39,9 +42,12 @@ private:
 	SDL_Texture* glowLeftTexture;
 	SDL_Texture* glowRightTexture;
 	SDL_Texture* rightFlipperTexture;
+	SDL_Texture* leftFlipperTexture;
 
-	PhysBody* flipperBody;
-	PhysBody* flipperPoint;
+	PhysBody* rightFlipperBody;
+	PhysBody* rightFlipperPoint;
+	PhysBody* leftFlipperBody;
+	PhysBody* leftFlipperPoint;
 
 	PhysBody* springBody;
 	PhysBody* springDown;
@@ -50,7 +56,8 @@ private:
 	PhysBody* circle200Body;
 	PhysBody* circle100Body;
 	iPoint springPosition;
-	iPoint flipperPosition;
+	iPoint rightFlipperPosition;
+	iPoint leftFlipperPosition;
 
 	Animation* currentAnim;
 	Animation arrowLights;
