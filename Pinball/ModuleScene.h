@@ -68,6 +68,8 @@ private:
 	Animation blueLightAnim;
 	SDL_Texture* blueLightTexture;
 
+	SDL_Texture* circleTexture;
+
 	int springForce = 0;
 
 	double rotation = 0;
