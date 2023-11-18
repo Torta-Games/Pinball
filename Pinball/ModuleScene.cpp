@@ -39,6 +39,8 @@ bool ModuleScene::Start()
 	blueLightTexture = App->textures->Load("pinball/BlueLight/blue_light.png");
 	circleTexture = App->textures->Load("pinball/circles_points.png");
 	numsTexture = App->textures->Load("pinball/nums.png");
+	rightArrowTexture = App->textures->Load("pinball/right_arrow_lights.png");
+	leftArrowTexture = App->textures->Load("pinball/left_arrow_lights.png");
 
 	arrowLights.PushBack({ 0,0,480,800 });
 	arrowLights.PushBack({ 480,0,480,800 });
@@ -70,9 +72,24 @@ bool ModuleScene::Start()
 	blueLightAnim.speed=0.5f;
 	blueLightAnim.loop = true;
 
-	
+	rightArrowAnim.PushBack({ 0,0,50,59});
+	rightArrowAnim.PushBack({ 50,0,50,59 });
+	rightArrowAnim.PushBack({ 100,0,50,59 });
+	rightArrowAnim.PushBack({ 150,0,50,59 });
+	rightArrowAnim.speed = 0.1f;
+	rightArrowAnim.loop = true;
+
+	leftArrowAnim.PushBack({ 0,0,60,60 });
+	leftArrowAnim.PushBack({ 60,0,60,60 });
+	leftArrowAnim.PushBack({ 120,0,60,60 });
+	leftArrowAnim.PushBack({ 180,0,60,60 });
+	leftArrowAnim.speed = 0.1f;
+	leftArrowAnim.loop = true;
+
 	currentAnim = &arrowLights;
 	currentAnimBlueLight = &blueLightAnim;
+	currentAnimRightArrow = &rightArrowAnim;
+	currentAnimLeftArrow = &leftArrowAnim;
 
 	//RIGHT FLIPPER
 
@@ -282,6 +299,14 @@ update_status ModuleScene::Update()
 	App->renderer->Blit(arrowLightsTexture, 0, 0, &rect);
 	SDL_Rect rect2 = currentAnimBlueLight->GetCurrentFrame();
 	App->renderer->Blit(blueLightTexture, 10, 383, &rect2);
+
+	currentAnimRightArrow->Update();
+	SDL_Rect rect3 = currentAnimRightArrow->GetCurrentFrame();
+	App->renderer->Blit(rightArrowTexture, 376, 393, &rect3);
+
+	currentAnimLeftArrow->Update();
+	SDL_Rect rect4 = currentAnimLeftArrow->GetCurrentFrame();
+	App->renderer->Blit(leftArrowTexture, 131, 378, &rect4);
 
 
 	string scoreString = to_string(App->player->score);
