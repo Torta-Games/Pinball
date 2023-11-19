@@ -9,6 +9,7 @@
 #include "ModulePhysics.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleScene.h"
+#include "ModuleSceneFinal.h"
 
 #include "Application.h"
 
@@ -28,6 +29,7 @@ Application::Application()
 	player = new ModulePlayer(this, false);
 	scene_intro = new ModuleSceneIntro(this);
 	scene = new ModuleScene(this, false);
+	scene_final = new ModuleSceneFinal(this, false);
 	physics = new ModulePhysics(this);
 
 	// The order of calls is very important!
@@ -45,6 +47,7 @@ Application::Application()
 	// Scenes
 	AddModule(scene_intro);
 	AddModule(scene);
+	AddModule(scene_final);
 	
 	// Player
 	AddModule(player);

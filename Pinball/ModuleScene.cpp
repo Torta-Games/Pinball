@@ -430,6 +430,22 @@ update_status ModuleScene::Update()
 		piston6Enabled = !piston6Enabled;
 	}
 
+	if (piston1Enabled && piston2Enabled && piston3Enabled)
+	{
+		App->player->score += 10000;
+		piston1Enabled = false;
+		piston2Enabled = false;
+		piston3Enabled = false;
+	}
+
+	if (piston4Enabled && piston5Enabled && piston6Enabled)
+	{
+		App->player->score += 5000;
+		piston4Enabled = false;
+		piston5Enabled = false;
+		piston6Enabled = false;
+	}
+
 	if (!piston1Enabled)
 	{
 		App->renderer->Blit(pistonTexture, 14, 381, &pistonDisabledRect);

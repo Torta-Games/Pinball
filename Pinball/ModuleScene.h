@@ -36,6 +36,13 @@ public:
 	bool rightFlipperActivated = false;
 	bool leftFlipperActivated = false;
 
+	bool piston1Enabled = false;
+	bool piston2Enabled = false;
+	bool piston3Enabled = false;
+	bool piston4Enabled = false;
+	bool piston5Enabled = false;
+	bool piston6Enabled = false;
+
 private:
 	SDL_Texture* backgroundTexture;
 	SDL_Texture* backgroundTexture2;
@@ -66,13 +73,6 @@ private:
 	SDL_Rect pistonLightDisabledRect = {480,0,480,800};
 	SDL_Rect pistonDisabledRect = {0,0,30,33};
 	SDL_Rect pistonEnabledRect = {30,0,30,33};
-
-	bool piston1Enabled = false;
-	bool piston2Enabled = false;
-	bool piston3Enabled = false;
-	bool piston4Enabled = false;
-	bool piston5Enabled = false;
-	bool piston6Enabled = false;
 
 	PhysBody* rightFlipperBody;
 	PhysBody* rightFlipperPoint;

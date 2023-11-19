@@ -5,6 +5,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleScene.h"
+#include "ModuleSceneFinal.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -66,7 +67,11 @@ update_status ModulePlayer::Update()
 		c = c->next;
 	}
 
-	//LOG("%i", score);
+	if (balls.count() == 0)
+	{
+		Disable();
+	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -74,6 +79,9 @@ update_status ModulePlayer::Update()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
+
+	App->scene->Disable();
+	App->scene_final->Enable();
 
 	return true;
 }
@@ -139,6 +147,24 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderType::BOING_4:
 		App->scene->boing4Colliding = true;
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		break;
+	case ColliderType::PISTON1:
+		App->scene->piston1Enabled = true;
+		break;
+	case ColliderType::PISTON2:
+		App->scene->piston2Enabled = true;
+		break;
+	case ColliderType::PISTON3:
+		App->scene->piston3Enabled = true;
+		break;
+	case ColliderType::PISTON4:
+		App->scene->piston4Enabled = true;
+		break;
+	case ColliderType::PISTON5:
+		App->scene->piston5Enabled = true;
+		break;
+	case ColliderType::PISTON6:
+		App->scene->piston6Enabled = true;
 		break;
 	}
 }
