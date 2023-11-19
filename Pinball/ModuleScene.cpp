@@ -21,6 +21,8 @@ ModuleScene::~ModuleScene()
 // Load assets
 bool ModuleScene::Start()
 {
+	App->audio->Init();
+
 	piston1Enabled = false;
 	piston2Enabled = false;
 	piston3Enabled = false;
@@ -63,6 +65,7 @@ bool ModuleScene::Start()
 	coinTexture = App->textures->Load("pinball/coin.png");
 
 	flipperFx = App->audio->LoadFx("pinball/Audio/flipper.ogg");
+	music = App->audio->LoadFx("pinball/Audio/music.ogg");
 
 	arrowLights.PushBack({ 0,0,480,800 });
 	arrowLights.PushBack({ 480,0,480,800 });
@@ -201,6 +204,8 @@ bool ModuleScene::Start()
 
 	LoadMap();
 
+	App->audio->PlayFx(music);
+
 	return ret;
 }
 
@@ -275,6 +280,8 @@ bool ModuleScene::CleanUp()
 	App->physics->world->DestroyBody(circulo1k->body);
 	App->physics->world->DestroyBody(circulo100L->body);
 	App->physics->world->DestroyBody(circulo100R->body);
+
+	App->audio->CleanUp();
 
 	return true;
 }

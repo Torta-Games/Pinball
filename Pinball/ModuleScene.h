@@ -121,7 +121,7 @@ private:
 	SDL_Texture* coinTexture;
 	fPoint coinPosition[5];
 
-	int flipperFx;
+	int flipperFx, music;
 
 	int springForce = 0;
 
