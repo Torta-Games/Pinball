@@ -66,6 +66,7 @@ bool ModuleScene::Start()
 
 	flipperFx = App->audio->LoadFx("pinball/Audio/flipper.ogg");
 	music = App->audio->LoadFx("pinball/Audio/music.ogg");
+	combo = App->audio->LoadFx("pinball/Audio/combo.ogg");
 
 	arrowLights.PushBack({ 0,0,480,800 });
 	arrowLights.PushBack({ 480,0,480,800 });
@@ -585,6 +586,7 @@ update_status ModuleScene::Update()
 		piston1Enabled = false;
 		piston2Enabled = false;
 		piston3Enabled = false;
+		App->audio->PlayFx(combo);
 	}
 
 	if (piston4Enabled && piston5Enabled && piston6Enabled)
@@ -593,6 +595,7 @@ update_status ModuleScene::Update()
 		piston4Enabled = false;
 		piston5Enabled = false;
 		piston6Enabled = false;
+		App->audio->PlayFx(combo);
 	}
 
 	if (!piston1Enabled)
