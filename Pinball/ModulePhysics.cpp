@@ -302,13 +302,12 @@ update_status ModulePhysics::PostUpdate()
 			{
 				if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
 				{
-					// Get new mouse position and re-target mouse_joint there
+
 					b2Vec2 mousePosition;
 					mousePosition.x = PIXEL_TO_METERS(App->input->GetMouseX());
 					mousePosition.y = PIXEL_TO_METERS(App->input->GetMouseY());
 					mouse_joint->SetTarget(mousePosition);
 
-					// Draw a red line between both anchor points
 					App->renderer->DrawLine(METERS_TO_PIXELS(mouse_body->GetPosition().x), METERS_TO_PIXELS(mouse_body->GetPosition().y), App->input->GetMouseX(), App->input->GetMouseY(), 255, 0, 0);
 				}
 			}
@@ -317,10 +316,8 @@ update_status ModulePhysics::PostUpdate()
 			{
 				if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP)
 				{
-					// Tell Box2D to destroy the mouse_joint
 					world->DestroyJoint(mouse_joint);
 
-					// DO NOT FORGET THIS! We need it for the "if (mouse_body != nullptr && mouse_joint != nullptr)"
 					mouse_joint = nullptr;
 					mouse_body = nullptr;
 				}

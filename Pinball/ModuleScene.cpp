@@ -155,11 +155,10 @@ bool ModuleScene::Start()
 	scoreFile >> highScore;
 	cout << highScore;
 	scoreFile.close();
-	LOG("%i", highScore);
 
 	for (int i = 0; i < 10; i++)
 	{
-		scoreRect[i] = { 1 + 8 * i, 81, 7, 8 };
+		scoreRect[i] = { 11 * i, 0, 8, 14 };
 	}
 
 	LoadMap();
@@ -364,7 +363,7 @@ update_status ModuleScene::Update()
 	{
 		int digit = scoreString[i] - '0';
 
-		App->renderer->Blit(numsTexture, scoreXPos + (i * 8), 20, &scoreRect[digit], 0.0f);
+		App->renderer->Blit(numsTexture, scoreXPos + (i * 10), 16, &scoreRect[digit], 0.0f);
 	}
 
 	string highScoreString = to_string(highScore);
@@ -374,7 +373,7 @@ update_status ModuleScene::Update()
 	{
 		int digit = highScoreString[i] - '0';
 
-		App->renderer->Blit(numsTexture, highScoreXPos + (i * 8), 40, &scoreRect[digit], 0.0f);
+		App->renderer->Blit(numsTexture, highScoreXPos + (i * 10), 40, &scoreRect[digit], 0.0f);
 	}
 
 	return UPDATE_CONTINUE;
