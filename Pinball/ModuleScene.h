@@ -90,6 +90,11 @@ private:
 	iPoint rightFlipperPosition;
 	iPoint leftFlipperPosition;
 
+	iPoint cordsBoing1;
+	iPoint cordsBoing2;
+	iPoint cordsBoing3;
+	iPoint cordsBoing4;
+
 	Animation* currentAnim;
 	Animation arrowLights;
 	SDL_Texture* arrowLightsTexture;
