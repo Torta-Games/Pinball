@@ -62,7 +62,7 @@ update_status ModulePlayer::Update()
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
-		App->renderer->Blit(ballTexture, x, y, NULL, 1.0f, c->data->GetRotation());
+		App->renderer->Blit(ballTexture, x-20, y-20, NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
 
