@@ -111,6 +111,8 @@ private:
 	Animation leftArrowAnim;
 	SDL_Texture* leftArrowTexture;
 
+	int flipperFx;
+
 	int springForce = 0;
 
 	double rotation = 0;

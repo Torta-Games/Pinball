@@ -53,6 +53,8 @@ bool ModuleScene::Start()
 	piston5LightTexture = App->textures->Load("pinball/light_piston_2_up.png");
 	piston6LightTexture = App->textures->Load("pinball/light_piston_3_up.png");
 
+	flipperFx = App->audio->LoadFx("pinball/Audio/flipper.ogg");
+
 	arrowLights.PushBack({ 0,0,480,800 });
 	arrowLights.PushBack({ 480,0,480,800 });
 	arrowLights.PushBack({ 960,0,480,800 });
@@ -268,12 +270,14 @@ update_status ModuleScene::Update()
 	{
 		rightFlipperActivated = true;
 		rightFlipperBody->body->ApplyForceToCenter(b2Vec2(0, -1000), true);
+		App->audio->PlayFx(flipperFx);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
 		leftFlipperActivated = true;
 		leftFlipperBody->body->ApplyForceToCenter(b2Vec2(0, -1000), true);
+		App->audio->PlayFx(flipperFx);
 	}
 
 	rotation--;

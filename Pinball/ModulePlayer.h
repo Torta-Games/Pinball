@@ -28,4 +28,6 @@ public:
 
 	int score = 0;
 
+	int point, boing;
+
 };

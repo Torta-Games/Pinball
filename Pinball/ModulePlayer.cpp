@@ -5,6 +5,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleScene.h"
+#include "ModuleAudio.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -17,6 +18,10 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	ballTexture = App->textures->Load("pinball/ball.png");
+
+	point = App->audio->LoadFx("pinball/Audio/point.ogg");
+	boing = App->audio->LoadFx("pinball/Audio/boing.ogg");
+
 	balls.add(App->physics->CreateCircle(385,780, 10, b2_staticBody));
 	balls.add(App->physics->CreateCircle(410, 780, 10, b2_staticBody));
 	balls.add(App->physics->CreateCircle(435, 780, 10, b2_staticBody));
@@ -100,21 +105,25 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ColliderType::CIRCLE_1000:
 		App->scene->circle1000Colliding = true;
+		App->audio->PlayFx(point);
 		score += 1000;
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::CIRCLE_500:
 		App->scene->circle500Colliding = true;
+		App->audio->PlayFx(point);
 		score += 500;
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::CIRCLE_200:
 		App->scene->circle200Colliding = true;
+		App->audio->PlayFx(point);
 		score += 200;
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::CIRCLE_100:
 		App->scene->circle100Colliding = true;
+		App->audio->PlayFx(point);
 		score += 100;
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
@@ -126,18 +135,22 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ColliderType::BOING_1:
 		App->scene->boing1Colliding = true;
+		App->audio->PlayFx(boing);
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::BOING_2:
 		App->scene->boing2Colliding = true;
+		App->audio->PlayFx(boing);
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::BOING_3:
 		App->scene->boing3Colliding = true;
+		App->audio->PlayFx(boing);
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::BOING_4:
 		App->scene->boing4Colliding = true;
+		App->audio->PlayFx(boing);
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	}
