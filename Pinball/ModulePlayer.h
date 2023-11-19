@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "p2Point.h"
 #include "ModuleTextures.h"
+#include "Animation.h"
 
 class ModulePlayer : public Module
 {
@@ -27,6 +28,10 @@ public:
 	int ballCount = 4;
 
 	SDL_Texture* back2Texture;
+	SDL_Texture* arrowLightsTexture;
+
+	Animation* currentAnim;
+	Animation arrowLights;
 
 	int score = 0;
 

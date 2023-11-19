@@ -125,8 +125,6 @@ bool ModuleScene::Start()
 	coinPosition[3] = fPoint(120, -150);
 	coinPosition[4] = fPoint(280, -150);
 
-
-
 	currentAnim = &arrowLights;
 	currentAnimBlueLight = &blueLightAnim;
 	currentAnimRightArrow = &rightArrowAnim;
@@ -264,6 +262,9 @@ bool ModuleScene::CleanUp()
 	App->physics->world->DestroyBody(Propulsor_1->body);
 	App->physics->world->DestroyBody(Propulsor_2->body);
 	App->physics->world->DestroyBody(Propulsor_3->body);
+	App->physics->world->DestroyBody(Propulsor_4->body);
+	App->physics->world->DestroyBody(Propulsor_5->body);
+	App->physics->world->DestroyBody(Propulsor_6->body);
 	App->physics->world->DestroyBody(Palo_1->body);
 	App->physics->world->DestroyBody(Palo_2->body);
 	App->physics->world->DestroyBody(Palo_3->body);
