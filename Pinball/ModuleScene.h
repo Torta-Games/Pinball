@@ -151,6 +151,9 @@ private:
 	PhysBody* Propulsor_1;
 	PhysBody* Propulsor_2;
 	PhysBody* Propulsor_3;
+	PhysBody* Propulsor_4;
+	PhysBody* Propulsor_5;
+	PhysBody* Propulsor_6;
 
 	PhysBody* Boing_1;
 	PhysBody* Boing_2;
@@ -517,6 +520,28 @@ private:
 	347, 635
 	};
 
+	int propulsor4[10] = {
+		39, 400,
+		42, 405,
+		26, 415,
+		22, 410,
+		35, 402
+	};
+	int propulsor5[10] = {
+		64, 416,
+		67, 420,
+		82, 411,
+		79, 406,
+		66, 414
+	};
+	int propulsor6[10] = {
+		108, 416,
+		112, 421,
+		127, 412,
+		124, 407,
+		111, 414
+	};
+
 	int propulsor1[10] = {
 		162, 174,
 		144, 191,
@@ -546,8 +571,8 @@ private:
 	411, 688,
 	408, 696,
 	404, 702,
-	327, 749,
-	321, 740,
+	320, 752,
+	316, 743,
 	395, 695,
 	398, 690,
 	401, 685,
@@ -557,8 +582,8 @@ private:
 	};
 
 	int palo2[26] = {
-	124, 735,
-	118, 744,
+	129, 740,
+	125, 747,
 	48, 702,
 	43, 696,
 	39, 689,
@@ -569,7 +594,7 @@ private:
 	49, 684,
 	52, 689,
 	56, 694,
-	121, 733
+	126, 737
 	};
 
 	int palo3[26] = {

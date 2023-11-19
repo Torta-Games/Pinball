@@ -130,7 +130,7 @@ bool ModuleScene::Start()
 
 	//RIGHT FLIPPER
 
-	rightFlipperPosition = iPoint(328, 740);
+	rightFlipperPosition = iPoint(313, 748);
 	rightFlipperBody = App->physics->CreateRectangle(rightFlipperPosition.x, rightFlipperPosition.y, 70, 16, b2_dynamicBody);
 	rightFlipperBody->ctype = ColliderType::RIGHT_FLIPPER;
 	rightFlipperPoint = App->physics->CreateCircle(rightFlipperPosition.x, rightFlipperPosition.y, 2, b2_staticBody);
@@ -147,7 +147,7 @@ bool ModuleScene::Start()
 	b2RevoluteJoint* rightFlipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&rightFlipperJointDef);
 
 	//LEFT FLIPPER
-	leftFlipperPosition = iPoint(120, 740);
+	leftFlipperPosition = iPoint(131, 745);
 	leftFlipperBody = App->physics->CreateRectangle(leftFlipperPosition.x, leftFlipperPosition.y, 70, 16, b2_dynamicBody);
 	leftFlipperBody->ctype = ColliderType::LEFT_FLIPPER;
 	leftFlipperPoint = App->physics->CreateCircle(leftFlipperPosition.x, leftFlipperPosition.y, 2, b2_staticBody);
@@ -290,6 +290,13 @@ void ModuleScene::LoadMap()
 	Propulsor_2->ctype = ColliderType::PISTON5;
 	Propulsor_3 = (App->physics->CreateChain(0, 0, propulsor3, 12, b2BodyType::b2_staticBody));
 	Propulsor_3->ctype = ColliderType::PISTON6;
+
+	Propulsor_4 = (App->physics->CreateChain(0, 0, propulsor4, 10, b2BodyType::b2_staticBody));
+	Propulsor_4->ctype = ColliderType::PISTON1;
+	Propulsor_5 = (App->physics->CreateChain(0, 0, propulsor5, 10, b2BodyType::b2_staticBody));
+	Propulsor_5->ctype = ColliderType::PISTON2;
+	Propulsor_6 = (App->physics->CreateChain(0, 0, propulsor6, 10, b2BodyType::b2_staticBody));
+	Propulsor_6->ctype = ColliderType::PISTON3;
 
 	Palo_1 = (App->physics->CreateChain(0, 0, palo1, 24, b2BodyType::b2_staticBody));
 	Palo_2 = (App->physics->CreateChain(0, 0, palo2, 26, b2BodyType::b2_staticBody));
