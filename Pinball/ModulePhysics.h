@@ -28,6 +28,12 @@ enum class ColliderType {
 	BOING_2,
 	BOING_3,
 	BOING_4,
+	PISTON1,
+	PISTON2,
+	PISTON3,
+	PISTON4,
+	PISTON5,
+	PISTON6,
 	// ..
 };
 

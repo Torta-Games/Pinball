@@ -45,6 +45,13 @@ bool ModuleScene::Start()
 	boing2Texture = App->textures->Load("pinball/glow_platform_upper_right.png");
 	boing3Texture = App->textures->Load("pinball/glow_platform_down_left.png");
 	boing4Texture = App->textures->Load("pinball/glow_platform_down_right.png");
+	pistonTexture = App->textures->Load("pinball/piston.png");
+	piston1LightTexture = App->textures->Load("pinball/light_piston_1_down.png");
+	piston2LightTexture = App->textures->Load("pinball/light_piston_2_down.png");
+	piston3LightTexture = App->textures->Load("pinball/light_piston_3_down.png");
+	piston4LightTexture = App->textures->Load("pinball/light_piston_1_up.png");
+	piston5LightTexture = App->textures->Load("pinball/light_piston_2_up.png");
+	piston6LightTexture = App->textures->Load("pinball/light_piston_3_up.png");
 
 	arrowLights.PushBack({ 0,0,480,800 });
 	arrowLights.PushBack({ 480,0,480,800 });
@@ -191,8 +198,11 @@ void ModuleScene::LoadMap()
 	Abajo_Izquierda->ctype = ColliderType::TRIANGLE_LEFT;
 
 	Propulsor_1 = (App->physics->CreateChain(0, 0, propulsor1, 10, b2BodyType::b2_staticBody));
+	Propulsor_1->ctype = ColliderType::PISTON4;
 	Propulsor_2 = (App->physics->CreateChain(0, 0, propulsor2, 12, b2BodyType::b2_staticBody));
+	Propulsor_2->ctype = ColliderType::PISTON5;
 	Propulsor_3 = (App->physics->CreateChain(0, 0, propulsor3, 12, b2BodyType::b2_staticBody));
+	Propulsor_3->ctype = ColliderType::PISTON6;
 
 	Palo_1 = (App->physics->CreateChain(0, 0, palo1, 24, b2BodyType::b2_staticBody));
 	Palo_2 = (App->physics->CreateChain(0, 0, palo2, 26, b2BodyType::b2_staticBody));
@@ -409,6 +419,82 @@ update_status ModuleScene::Update()
 	currentAnimLeftArrow->Update();
 	SDL_Rect rect4 = currentAnimLeftArrow->GetCurrentFrame();
 	App->renderer->Blit(leftArrowTexture, 131, 378, &rect4);
+
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+	{
+		piston1Enabled = !piston1Enabled;
+		piston2Enabled = !piston2Enabled;
+		piston3Enabled = !piston3Enabled;
+		piston4Enabled = !piston4Enabled;
+		piston5Enabled = !piston5Enabled;
+		piston6Enabled = !piston6Enabled;
+	}
+
+	if (!piston1Enabled)
+	{
+		App->renderer->Blit(pistonTexture, 14, 381, &pistonDisabledRect);
+		App->renderer->Blit(piston1LightTexture, 0, 0, &pistonLightDisabledRect);
+	}
+	else
+	{
+		App->renderer->Blit(pistonTexture, 15, 384, &pistonEnabledRect);
+		App->renderer->Blit(piston1LightTexture, 0, 0, &pistonLightEnabledRect);
+	}
+
+	if (!piston2Enabled)
+	{
+		App->renderer->Blit(pistonTexture, 57, 387, &pistonDisabledRect);
+		App->renderer->Blit(piston2LightTexture, 0, 0, &pistonLightDisabledRect);
+	}
+	else
+	{
+		App->renderer->Blit(pistonTexture, 58, 389, &pistonEnabledRect);
+		App->renderer->Blit(piston2LightTexture, 0, 0, &pistonLightEnabledRect);
+	}
+
+	if (!piston3Enabled)
+	{
+		App->renderer->Blit(pistonTexture, 98, 389, &pistonDisabledRect);
+		App->renderer->Blit(piston3LightTexture, 0, 0, &pistonLightDisabledRect);
+	}
+	else
+	{
+		App->renderer->Blit(pistonTexture, 99, 391, &pistonEnabledRect);
+		App->renderer->Blit(piston3LightTexture, 0, 0, &pistonLightEnabledRect);
+	}
+
+	if (!piston4Enabled)
+	{
+		App->renderer->Blit(pistonTexture, 129, 158, &pistonDisabledRect, 0, -20);
+		App->renderer->Blit(piston4LightTexture, 0, 0, &pistonLightDisabledRect);
+	}
+	else
+	{
+		App->renderer->Blit(pistonTexture, 131, 160, &pistonEnabledRect, 0, -20);
+		App->renderer->Blit(piston4LightTexture, 0, 0, &pistonLightEnabledRect);
+	}
+
+	if (!piston5Enabled)
+	{
+		App->renderer->Blit(pistonTexture, 158, 134, &pistonDisabledRect, 0, -5);
+		App->renderer->Blit(piston5LightTexture, 0, 0, &pistonLightDisabledRect);
+	}
+	else
+	{
+		App->renderer->Blit(pistonTexture, 160, 138, &pistonEnabledRect, 0, -5);
+		App->renderer->Blit(piston5LightTexture, 0, 0, &pistonLightEnabledRect);
+	}
+
+	if (!piston6Enabled)
+	{
+		App->renderer->Blit(pistonTexture, 190, 121, &pistonDisabledRect, 0, 16);
+		App->renderer->Blit(piston6LightTexture, 0, 0, &pistonLightDisabledRect);
+	}
+	else
+	{
+		App->renderer->Blit(pistonTexture, 190, 124, &pistonEnabledRect, 0, 16);
+		App->renderer->Blit(piston6LightTexture, 0, 0, &pistonLightEnabledRect);
+	}
 
 
 	string scoreString = to_string(App->player->score);

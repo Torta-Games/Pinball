@@ -54,6 +54,26 @@ private:
 	SDL_Texture* boing3Texture;
 	SDL_Texture* boing4Texture;
 
+	SDL_Texture* pistonTexture;
+	SDL_Texture* piston1LightTexture;
+	SDL_Texture* piston2LightTexture;
+	SDL_Texture* piston3LightTexture;
+	SDL_Texture* piston4LightTexture;
+	SDL_Texture* piston5LightTexture;
+	SDL_Texture* piston6LightTexture;
+
+	SDL_Rect pistonLightEnabledRect = {0,0,480,800};
+	SDL_Rect pistonLightDisabledRect = {480,0,480,800};
+	SDL_Rect pistonDisabledRect = {0,0,30,33};
+	SDL_Rect pistonEnabledRect = {30,0,30,33};
+
+	bool piston1Enabled = false;
+	bool piston2Enabled = false;
+	bool piston3Enabled = false;
+	bool piston4Enabled = false;
+	bool piston5Enabled = false;
+	bool piston6Enabled = false;
+
 	PhysBody* rightFlipperBody;
 	PhysBody* rightFlipperPoint;
 	PhysBody* leftFlipperBody;
