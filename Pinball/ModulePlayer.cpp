@@ -24,6 +24,9 @@ bool ModulePlayer::Start()
 	point = App->audio->LoadFx("pinball/Audio/point.ogg");
 	boing = App->audio->LoadFx("pinball/Audio/boing.ogg");
 
+	ballCount = 4;
+	score = 0;
+
 	balls.add(App->physics->CreateCircle(385,780, 10, b2_staticBody));
 	balls.add(App->physics->CreateCircle(410, 780, 10, b2_staticBody));
 	balls.add(App->physics->CreateCircle(435, 780, 10, b2_staticBody));

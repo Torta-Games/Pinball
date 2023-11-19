@@ -16,7 +16,6 @@ public:
 	bool flip = false;
 	int loopCount = 0;
 
-private:
 	float currentFrame = 0.0f;
 	int totalFrames = 0;
 	int pingpongCount = 0;
