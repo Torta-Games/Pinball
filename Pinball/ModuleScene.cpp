@@ -634,7 +634,7 @@ update_status ModuleScene::Update()
 	}
 	else
 	{
-		App->renderer->Blit(pistonTexture, 131, 160, &pistonEnabledRect, 0, -20);
+		App->renderer->Blit(pistonTexture, 131, 160, &pistonEnabledRect, 0, -20);//////
 		App->renderer->Blit(piston4LightTexture, 0, 0, &pistonLightEnabledRect);
 	}
 
@@ -681,7 +681,7 @@ update_status ModuleScene::Update()
 		App->renderer->Blit(numsTexture, highScoreXPos + (i * 10), 40, &scoreRect[digit], 0.0f);
 	}
 
-	if (coins && coinPosition[0].y<2000)
+	if (coins && coinPosition[0].y<1000)
 	{
 		coinPosition[0].y += 5;
 		coinPosition[1].y += 5;
@@ -695,6 +695,15 @@ update_status ModuleScene::Update()
 		App->renderer->Blit(coinTexture, coinPosition[2].x, coinPosition[2].y, &rect5);
 		App->renderer->Blit(coinTexture, coinPosition[3].x, coinPosition[3].y, &rect5);
 		App->renderer->Blit(coinTexture, coinPosition[4].x, coinPosition[4].y, &rect5);
+		if (coinPosition[0].y>999)
+		{
+			coins = false;
+			coinPosition[0] = fPoint(50, 0);
+			coinPosition[1] = fPoint(190, 0);
+			coinPosition[2] = fPoint(340, 0);
+			coinPosition[3] = fPoint(120, -150);
+			coinPosition[4] = fPoint(280, -150);
+		}
 	}
 
 	return UPDATE_CONTINUE;
