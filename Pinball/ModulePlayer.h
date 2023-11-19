@@ -28,6 +28,6 @@ public:
 
 	int score = 0;
 
-	int point, boing, jackpot;
+	int point, boing, portal,jackpot;
 
 };

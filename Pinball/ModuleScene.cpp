@@ -199,7 +199,68 @@ bool ModuleScene::Start()
 // Load assets
 bool ModuleScene::CleanUp()
 {
-	LOG("Unloading scene");
+	LOG("Unloading scene");	
+	App->textures->Unload(backgroundTexture);
+	App->textures->Unload(backgroundTexture2);
+	App->textures->Unload(springTexture);
+	App->textures->Unload(rotatingLightsTexture);
+	App->textures->Unload(glow100Texture);
+	App->textures->Unload(glow200Texture);
+	App->textures->Unload(glow500Texture);
+	App->textures->Unload(glow1000Texture);
+	App->textures->Unload(glowLeftTexture);
+	App->textures->Unload(glowRightTexture);
+	App->textures->Unload(arrowLightsTexture);
+	App->textures->Unload(rightFlipperTexture);
+	App->textures->Unload(leftFlipperTexture);
+	App->textures->Unload(blueLightTexture);
+	App->textures->Unload(circleTexture);
+	App->textures->Unload(numsTexture);
+	App->textures->Unload(rightArrowTexture);
+	App->textures->Unload(leftArrowTexture);
+	App->textures->Unload(boing1Texture);
+	App->textures->Unload(boing2Texture);
+	App->textures->Unload(boing3Texture);
+	App->textures->Unload(boing4Texture);
+	App->textures->Unload(pistonTexture);
+	App->textures->Unload(piston1LightTexture);
+	App->textures->Unload(piston2LightTexture);
+	App->textures->Unload(piston3LightTexture);
+	App->textures->Unload(piston4LightTexture);
+	App->textures->Unload(piston5LightTexture);
+	App->textures->Unload(piston6LightTexture);
+
+	arrowLights.totalFrames = 0;
+	blueLightAnim.totalFrames = 0;
+	rightArrowAnim.totalFrames = 0;
+	leftArrowAnim.totalFrames = 0;
+
+	App->physics->world->DestroyBody(rightFlipperBody->body);
+	App->physics->world->DestroyBody(rightFlipperPoint->body);
+	App->physics->world->DestroyBody(leftFlipperBody->body);
+	App->physics->world->DestroyBody(leftFlipperPoint->body);
+	App->physics->world->DestroyBody(springBody->body);
+	App->physics->world->DestroyBody(springDown->body);
+	App->physics->world->DestroyBody(circle1000Body->body);
+	App->physics->world->DestroyBody(circle500Body->body);
+	App->physics->world->DestroyBody(circle200Body->body);
+	App->physics->world->DestroyBody(circle100Body->body);
+	App->physics->world->DestroyBody(Pinball->body);
+	App->physics->world->DestroyBody(Abajo_Derecha->body);
+	App->physics->world->DestroyBody(Abajo_Izquierda->body);
+	App->physics->world->DestroyBody(Propulsor_1->body);
+	App->physics->world->DestroyBody(Propulsor_2->body);
+	App->physics->world->DestroyBody(Propulsor_3->body);
+	App->physics->world->DestroyBody(Palo_1->body);
+	App->physics->world->DestroyBody(Palo_2->body);
+	App->physics->world->DestroyBody(Palo_3->body);
+	App->physics->world->DestroyBody(Palo_4->body);
+	App->physics->world->DestroyBody(Boing_1->body);
+	App->physics->world->DestroyBody(Boing_2->body);
+	App->physics->world->DestroyBody(Boing_3->body);
+	App->physics->world->DestroyBody(Boing_4->body);
+	App->physics->world->DestroyBody(circulo1->body);
+	App->physics->world->DestroyBody(circulo2->body);
 
 	return true;
 }

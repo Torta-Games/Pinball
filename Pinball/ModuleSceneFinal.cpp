@@ -8,6 +8,7 @@
 #include "ModulePhysics.h"
 #include "ModuleScene.h"
 #include "ModulePlayer.h"
+#include <string>
 
 ModuleSceneFinal::ModuleSceneFinal(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -25,7 +26,17 @@ bool ModuleSceneFinal::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
+	score = App->player->score;
+
+	for (int i = 0; i < 10; i++)
+	{
+		scoreRect[i] = { 11 * i, 0, 8, 14 };
+	}
+
+	buttonClicked = false;
+
 	backgroundTexture = App->textures->Load("pinball/game_over_pinball.png");
+	numsTexture = App->textures->Load("pinball/nums.png");
 	//Disable();
 	return ret;
 }
@@ -34,6 +45,8 @@ bool ModuleSceneFinal::Start()
 bool ModuleSceneFinal::CleanUp()
 {
 	LOG("Unloading Intro scene");
+	backgroundTexture = nullptr;
+	numsTexture = nullptr;
 	App->player->Enable();
 	App->scene->Enable();
 	return true;
@@ -60,6 +73,16 @@ update_status ModuleSceneFinal::Update()
 	}
 
 	App->renderer->Blit(backgroundTexture, 0, 0);
+
+	string scoreString = to_string(score);
+	int scoreXPos = 250 - (scoreString.size() * 8);
+
+	for (unsigned int i = 0; i < scoreString.size(); i++)
+	{
+		int digit = scoreString[i] - '0';
+
+		App->renderer->Blit(numsTexture, scoreXPos + (i * 10), 430, &scoreRect[digit], 0.0f);
+	}
 
 	return UPDATE_CONTINUE;
 }

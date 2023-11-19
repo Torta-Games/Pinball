@@ -24,6 +24,10 @@ bool ModulePlayer::Start()
 	point = App->audio->LoadFx("pinball/Audio/point.ogg");
 	boing = App->audio->LoadFx("pinball/Audio/boing.ogg");
 	jackpot = App->audio->LoadFx("pinball/Audio/jackpot.mp3");
+	portal = App->audio->LoadFx("pinball/Audio/portal.ogg");
+
+	ballCount = 4;
+	score = 0;
 
 	balls.add(App->physics->CreateCircle(385,780, 10, b2_staticBody));
 	balls.add(App->physics->CreateCircle(410, 780, 10, b2_staticBody));
@@ -86,7 +90,7 @@ update_status ModulePlayer::Update()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
-
+	ballTexture = nullptr;
 	App->scene->Disable();
 	App->scene_final->Enable();
 
@@ -139,8 +143,10 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ColliderType::CIRCLE_TP1:
 		canTp1 = true;
+		App->audio->PlayFx(portal);
 		break;
 	case ColliderType::CIRCLE_TP2:
+		App->audio->PlayFx(portal);
 		canTp2 = true;
 		break;
 	case ColliderType::BOING_1:
@@ -151,6 +157,7 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderType::BOING_2:
 		App->scene->boing2Colliding = true;
 		App->audio->PlayFx(boing);
+		score += 500;
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::BOING_3:
