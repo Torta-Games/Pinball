@@ -27,6 +27,10 @@ public:
 	bool circle500Colliding = false;
 	bool circle200Colliding = false;
 	bool circle100Colliding = false;
+	bool boing1Colliding = false;
+	bool boing2Colliding = false;
+	bool boing3Colliding = false;
+	bool boing4Colliding = false;
 	float timer = 0;
 
 	bool rightFlipperActivated = false;
@@ -45,6 +49,10 @@ private:
 	SDL_Texture* glowRightTexture;
 	SDL_Texture* rightFlipperTexture;
 	SDL_Texture* leftFlipperTexture;
+	SDL_Texture* boing1Texture;
+	SDL_Texture* boing2Texture;
+	SDL_Texture* boing3Texture;
+	SDL_Texture* boing4Texture;
 
 	PhysBody* rightFlipperBody;
 	PhysBody* rightFlipperPoint;

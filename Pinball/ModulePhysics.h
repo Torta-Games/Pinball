@@ -24,6 +24,10 @@ enum class ColliderType {
 	CIRCLE_100,
 	CIRCLE_TP1,
 	CIRCLE_TP2,
+	BOING_1,
+	BOING_2,
+	BOING_3,
+	BOING_4,
 	// ..
 };
 

@@ -124,6 +124,22 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderType::CIRCLE_TP2:
 		canTp2 = true;
 		break;
+	case ColliderType::BOING_1:
+		App->scene->boing1Colliding = true;
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		break;
+	case ColliderType::BOING_2:
+		App->scene->boing2Colliding = true;
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		break;
+	case ColliderType::BOING_3:
+		App->scene->boing3Colliding = true;
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		break;
+	case ColliderType::BOING_4:
+		App->scene->boing4Colliding = true;
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		break;
 	}
 }
 

@@ -41,6 +41,10 @@ bool ModuleScene::Start()
 	numsTexture = App->textures->Load("pinball/nums.png");
 	rightArrowTexture = App->textures->Load("pinball/right_arrow_lights.png");
 	leftArrowTexture = App->textures->Load("pinball/left_arrow_lights.png");
+	boing1Texture = App->textures->Load("pinball/glow_platform_upper_left.png");
+	boing2Texture = App->textures->Load("pinball/glow_platform_upper_right.png");
+	boing3Texture = App->textures->Load("pinball/glow_platform_down_left.png");
+	boing4Texture = App->textures->Load("pinball/glow_platform_down_right.png");
 
 	arrowLights.PushBack({ 0,0,480,800 });
 	arrowLights.PushBack({ 480,0,480,800 });
@@ -195,10 +199,15 @@ void ModuleScene::LoadMap()
 	Palo_3 = (App->physics->CreateChain(0, 0, palo3, 26, b2BodyType::b2_staticBody));
 	Palo_4 = (App->physics->CreateChain(0, 0, palo4, 28, b2BodyType::b2_staticBody));
 
-	Boing_1 = (App->physics->CreateChain(0, 0, boing1, 14, b2BodyType::b2_staticBody));
-	Boing_2 = (App->physics->CreateChain(0, 0, boing2, 10, b2BodyType::b2_staticBody));
-	Boing_3 = (App->physics->CreateChain(0, 0, boing3, 14, b2BodyType::b2_staticBody));
-	Boing_4 = (App->physics->CreateChain(0, 0, boing4, 14, b2BodyType::b2_staticBody));
+	Boing_1 = (App->physics->CreateChain(0, 0, boing1, 14, b2BodyType::b2_staticBody)); //Arriba Izquierda
+	Boing_2 = (App->physics->CreateChain(0, 0, boing2, 10, b2BodyType::b2_staticBody)); //Arriba derecha pequeño
+	Boing_3 = (App->physics->CreateChain(0, 0, boing3, 14, b2BodyType::b2_staticBody)); //Abajo Izquierda
+	Boing_4 = (App->physics->CreateChain(0, 0, boing4, 14, b2BodyType::b2_staticBody)); //Abajo Derecha
+
+	Boing_1->ctype = ColliderType::BOING_1;
+	Boing_2->ctype = ColliderType::BOING_2;
+	Boing_3->ctype = ColliderType::BOING_3;
+	Boing_4->ctype = ColliderType::BOING_4;
 
 	circulo1 = (App->physics->CreateCircle(19, 334, 7, b2BodyType::b2_staticBody));
 	circulo1->body->GetFixtureList()->SetSensor(true);
@@ -335,6 +344,52 @@ update_status ModuleScene::Update()
 		}
 		else App->renderer->Blit(glowRightTexture, 0, 0);
 	}
+
+	if (boing1Colliding)
+	{
+		if (timer == 0) timer = SDL_GetTicks();
+
+		if (SDL_GetTicks() - timer >= 200)
+		{
+			timer = 0;
+			boing1Colliding = false;
+		}
+		else App->renderer->Blit(boing1Texture, 0, 0);
+	}
+	if (boing2Colliding)
+	{
+		if (timer == 0) timer = SDL_GetTicks();
+
+		if (SDL_GetTicks() - timer >= 200)
+		{
+			timer = 0;
+			boing2Colliding = false;
+		}
+		else App->renderer->Blit(boing2Texture, 0, 0);
+	}
+	if (boing3Colliding)
+	{
+		if (timer == 0) timer = SDL_GetTicks();
+
+		if (SDL_GetTicks() - timer >= 200)
+		{
+			timer = 0;
+			boing3Colliding = false;
+		}
+		else App->renderer->Blit(boing3Texture, 0, 0);
+	}
+	if (boing4Colliding)
+	{
+		if (timer == 0) timer = SDL_GetTicks();
+
+		if (SDL_GetTicks() - timer >= 200)
+		{
+			timer = 0;
+			boing4Colliding = false;
+		}
+		else App->renderer->Blit(boing4Texture, 0, 0);
+	}
+
 
 	App->renderer->Blit(rightFlipperTexture, rightFlipperPosition.x - 32, rightFlipperPosition.y - 32, NULL, 0, rightFlipperBody->GetRotation() + 30, 32, 32);
 	App->renderer->Blit(leftFlipperTexture, leftFlipperPosition.x - 50, leftFlipperPosition.y - 30, NULL, 0, leftFlipperBody->GetRotation() - 30, 50, 30);
