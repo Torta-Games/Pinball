@@ -329,6 +329,26 @@ void ModuleScene::LoadMap()
 	circulo3->body->GetFixtureList()->SetSensor(true);
 	circulo3->ctype = ColliderType::COINS;
 
+	circulo10k = (App->physics->CreateCircle(19, 256, 15, b2BodyType::b2_staticBody));
+	circulo10k->body->GetFixtureList()->SetSensor(true);
+	circulo10k->ctype = ColliderType::CIRCLE_10k;
+
+	circulo5k = (App->physics->CreateCircle(54, 242, 15, b2BodyType::b2_staticBody));
+	circulo5k->body->GetFixtureList()->SetSensor(true);
+	circulo5k->ctype = ColliderType::CIRCLE_5k;
+
+	circulo1k = (App->physics->CreateCircle(90, 228, 15, b2BodyType::b2_staticBody));
+	circulo1k->body->GetFixtureList()->SetSensor(true);
+	circulo1k->ctype = ColliderType::CIRCLE_1k;
+
+	circulo100L = (App->physics->CreateCircle(60, 660, 10, b2BodyType::b2_staticBody));
+	circulo100L->body->GetFixtureList()->SetSensor(true);
+	circulo100L->ctype = ColliderType::CIRCLE_100L;
+
+	circulo100R = (App->physics->CreateCircle(388, 660, 10, b2BodyType::b2_staticBody));
+	circulo100R->body->GetFixtureList()->SetSensor(true);
+	circulo100R->ctype = ColliderType::CIRCLE_100R;
+
 	boxes.add(App->physics->CreateRectangleSensor(230, 800, 220, 2));
 	boxes.getLast()->data->listener = this;
 	boxes.getLast()->data->ctype = ColliderType::SENSOR;

@@ -160,9 +160,11 @@ private:
 	PhysBody* circulo1;
 	PhysBody* circulo2;
 	PhysBody* circulo3;
-
-
-
+	PhysBody* circulo10k;
+	PhysBody* circulo5k;
+	PhysBody* circulo1k;
+	PhysBody* circulo100L;
+	PhysBody* circulo100R;
 
 	PhysBody* sensor;
 	bool sensed;

@@ -197,6 +197,26 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->scene->coins = true;
 		score += 7000;
 		break;
+	case ColliderType::CIRCLE_10k:
+		App->audio->PlayFx(point);
+		score += 10000;
+		break;
+	case ColliderType::CIRCLE_5k:
+		App->audio->PlayFx(point);
+		score += 5000;
+		break;
+	case ColliderType::CIRCLE_1k:
+		App->audio->PlayFx(point);
+		score += 1000;
+		break;
+	case ColliderType::CIRCLE_100L:
+		App->audio->PlayFx(point);
+		score += 100;
+		break;
+	case ColliderType::CIRCLE_100R:
+		App->audio->PlayFx(point);
+		score += 100;
+		break;
 	}
 }
 

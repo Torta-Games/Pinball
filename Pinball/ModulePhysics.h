@@ -35,6 +35,11 @@ enum class ColliderType {
 	PISTON5,
 	PISTON6,
 	COINS,
+	CIRCLE_10k,
+	CIRCLE_5k,
+	CIRCLE_1k,
+	CIRCLE_100L,
+	CIRCLE_100R,
 	// ..
 };
 
