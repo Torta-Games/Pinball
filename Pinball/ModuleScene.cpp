@@ -52,6 +52,7 @@ bool ModuleScene::Start()
 	piston4LightTexture = App->textures->Load("pinball/light_piston_1_up.png");
 	piston5LightTexture = App->textures->Load("pinball/light_piston_2_up.png");
 	piston6LightTexture = App->textures->Load("pinball/light_piston_3_up.png");
+	coinTexture = App->textures->Load("pinball/coin.png");
 
 	flipperFx = App->audio->LoadFx("pinball/Audio/flipper.ogg");
 
@@ -98,6 +99,22 @@ bool ModuleScene::Start()
 	leftArrowAnim.PushBack({ 180,0,60,60 });
 	leftArrowAnim.speed = 0.1f;
 	leftArrowAnim.loop = true;
+
+	coinAnim.PushBack({ 0,0,100,100 });
+	coinAnim.PushBack({ 100,0,100,100 });
+	coinAnim.PushBack({ 200,0,100,100 });
+	coinAnim.PushBack({ 300,0,100,100 });
+	coinAnim.PushBack({ 400,0,100,100 });
+	coinAnim.PushBack({ 500,0,100,100 });
+	coinAnim.speed = 0.2f;
+	coinAnim.loop = true;
+	coinPosition[0] = fPoint(50, 0);
+	coinPosition[1] = fPoint(190, 0);
+	coinPosition[2] = fPoint(340, 0);
+	coinPosition[3] = fPoint(120, -150);
+	coinPosition[4] = fPoint(280, -150);
+
+
 
 	currentAnim = &arrowLights;
 	currentAnimBlueLight = &blueLightAnim;
@@ -227,6 +244,10 @@ void ModuleScene::LoadMap()
 	circulo2 = (App->physics->CreateCircle(161, 99, 7, b2BodyType::b2_staticBody));
 	circulo2->body->GetFixtureList()->SetSensor(true);
 	circulo2->ctype = ColliderType::CIRCLE_TP2;
+
+	circulo3 = (App->physics->CreateCircle(110, 337, 15, b2BodyType::b2_staticBody));
+	circulo3->body->GetFixtureList()->SetSensor(true);
+	circulo3->ctype = ColliderType::COINS;
 
 	boxes.add(App->physics->CreateRectangleSensor(230, 800, 220, 2));
 	boxes.getLast()->data->listener = this;
@@ -424,6 +445,8 @@ update_status ModuleScene::Update()
 	SDL_Rect rect4 = currentAnimLeftArrow->GetCurrentFrame();
 	App->renderer->Blit(leftArrowTexture, 131, 378, &rect4);
 
+
+
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 	{
 		piston1Enabled = !piston1Enabled;
@@ -535,6 +558,22 @@ update_status ModuleScene::Update()
 		int digit = highScoreString[i] - '0';
 
 		App->renderer->Blit(numsTexture, highScoreXPos + (i * 10), 40, &scoreRect[digit], 0.0f);
+	}
+
+	if (coins)
+	{
+		coinPosition[0].y += 5;
+		coinPosition[1].y += 5;
+		coinPosition[2].y += 5;
+		coinPosition[3].y += 5;
+		coinPosition[4].y += 5;
+		coinAnim.Update();
+		SDL_Rect rect5 = coinAnim.GetCurrentFrame();
+		App->renderer->Blit(coinTexture, coinPosition[0].x, coinPosition[0].y, &rect5);
+		App->renderer->Blit(coinTexture, coinPosition[1].x, coinPosition[1].y, &rect5);
+		App->renderer->Blit(coinTexture, coinPosition[2].x, coinPosition[2].y, &rect5);
+		App->renderer->Blit(coinTexture, coinPosition[3].x, coinPosition[3].y, &rect5);
+		App->renderer->Blit(coinTexture, coinPosition[4].x, coinPosition[4].y, &rect5);
 	}
 
 	return UPDATE_CONTINUE;

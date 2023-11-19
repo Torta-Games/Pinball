@@ -34,6 +34,7 @@ enum class ColliderType {
 	PISTON4,
 	PISTON5,
 	PISTON6,
+	COINS,
 	// ..
 };
 

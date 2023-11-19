@@ -42,6 +42,7 @@ public:
 	bool piston4Enabled = false;
 	bool piston5Enabled = false;
 	bool piston6Enabled = false;
+	bool coins = false;
 
 private:
 	SDL_Texture* backgroundTexture;
@@ -93,7 +94,6 @@ private:
 	Animation arrowLights;
 	SDL_Texture* arrowLightsTexture;
 
-
 	Animation* currentAnimBlueLight;
 	Animation blueLightAnim;
 	SDL_Texture* blueLightTexture;
@@ -110,6 +110,11 @@ private:
 	Animation* currentAnimLeftArrow;
 	Animation leftArrowAnim;
 	SDL_Texture* leftArrowTexture;
+
+	Animation* curretnAnimCoin;
+	Animation coinAnim;
+	SDL_Texture* coinTexture;
+	fPoint coinPosition[5];
 
 	int flipperFx;
 
@@ -149,6 +154,7 @@ private:
 
 	PhysBody* circulo1;
 	PhysBody* circulo2;
+	PhysBody* circulo3;
 
 
 
