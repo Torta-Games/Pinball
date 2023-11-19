@@ -296,10 +296,22 @@ void ModuleScene::LoadMap()
 	Palo_3 = (App->physics->CreateChain(0, 0, palo3, 26, b2BodyType::b2_staticBody));
 	Palo_4 = (App->physics->CreateChain(0, 0, palo4, 28, b2BodyType::b2_staticBody));
 
-	Boing_1 = (App->physics->CreateChain(0, 0, boing1, 14, b2BodyType::b2_staticBody)); //Arriba Izquierda
-	Boing_2 = (App->physics->CreateChain(0, 0, boing2, 10, b2BodyType::b2_staticBody)); //Arriba derecha pequeño
-	Boing_3 = (App->physics->CreateChain(0, 0, boing3, 14, b2BodyType::b2_staticBody)); //Abajo Izquierda
-	Boing_4 = (App->physics->CreateChain(0, 0, boing4, 14, b2BodyType::b2_staticBody)); //Abajo Derecha
+	cordsBoing1 = iPoint(27, 146);
+	cordsBoing2 = iPoint(255, 119);
+	cordsBoing3 = iPoint(77, 517);
+	cordsBoing4 = iPoint(355, 539);
+	Boing_1 = (App->physics->CreateRectangle(cordsBoing1.x, cordsBoing1.y, 51, 7, b2BodyType::b2_staticBody));
+	Boing_1->body->SetTransform(Boing_1->body->GetPosition(), DEGTORAD * 108);
+	//Boing_1 = (App->physics->CreateChain(0, 0, boing1, 14, b2BodyType::b2_staticBody)); //Arriba Izquierda
+	Boing_2 = (App->physics->CreateRectangle(cordsBoing2.x, cordsBoing2.y, 22, 7, b2BodyType::b2_staticBody));
+	Boing_2->body->SetTransform(Boing_2->body->GetPosition(), DEGTORAD * 93);
+	//Boing_2 = (App->physics->CreateChain(0, 0, boing2, 10, b2BodyType::b2_staticBody)); //Arriba derecha pequeño
+	Boing_3 = (App->physics->CreateRectangle(cordsBoing3.x, cordsBoing3.y, 55, 5, b2BodyType::b2_staticBody));
+	Boing_3->body->SetTransform(Boing_3->body->GetPosition(), DEGTORAD * -120);
+	//Boing_3 = (App->physics->CreateChain(0, 0, boing3, 14, b2BodyType::b2_staticBody)); //Abajo Izquierda
+	Boing_4 = (App->physics->CreateRectangle(cordsBoing4.x + 17, cordsBoing4.y - 25, 55, 5, b2BodyType::b2_staticBody));
+	Boing_4->body->SetTransform(Boing_4->body->GetPosition(), DEGTORAD * 120);
+	//Boing_4 = (App->physics->CreateChain(0, 0, boing4, 14, b2BodyType::b2_staticBody)); //Abajo Derecha
 
 	Boing_1->ctype = ColliderType::BOING_1;
 	Boing_2->ctype = ColliderType::BOING_2;
