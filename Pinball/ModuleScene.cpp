@@ -641,7 +641,7 @@ update_status ModuleScene::Update()
 
 
 	string scoreString = to_string(App->player->score);
-	int scoreXPos = 97 - (scoreString.size() * 8);
+	int scoreXPos = 130 - (scoreString.size() * 8);
 
 	for (unsigned int i = 0; i < scoreString.size(); i++)
 	{
@@ -651,7 +651,7 @@ update_status ModuleScene::Update()
 	}
 
 	string highScoreString = to_string(highScore);
-	int highScoreXPos = 430 - (highScoreString.size() * 8);
+	int highScoreXPos = 455 - (highScoreString.size() * 8);
 
 	for (unsigned int i = 0; i < highScoreString.size(); i++)
 	{
