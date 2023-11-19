@@ -83,6 +83,7 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	b2Vec2 impulseDirection = bodyA->body->GetPosition() - bodyB->body->GetPosition();
 	impulseDirection.Normalize();
 	float impulseMagnitude = 1.0f;
+	float impulseMagnitude2 = 0.5f;
 
 	switch (bodyB->ctype)
 	{
@@ -91,11 +92,11 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ColliderType::TRIANGLE_LEFT:
 		App->scene->leftTriangleColliding = true;
-		//bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude2 * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::TRIANGLE_RIGHT:
 		App->scene->rightTriangleColliding = true;
-		//bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
+		bodyA->body->ApplyLinearImpulse(impulseMagnitude2 * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::CIRCLE_1000:
 		App->scene->circle1000Colliding = true;
@@ -116,10 +117,6 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->scene->circle100Colliding = true;
 		score += 100;
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
-		break;
-	case ColliderType::RIGHT_FLIPPER:
-		break;
-	case ColliderType::LEFT_FLIPPER:
 		break;
 	case ColliderType::CIRCLE_TP1:
 		canTp1 = true;

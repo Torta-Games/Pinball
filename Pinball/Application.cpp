@@ -24,10 +24,10 @@ Application::Application()
 	window = new ModuleWindow(this);
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
-	audio = new ModuleAudio(this, true);
-	player = new ModulePlayer(this);
+	audio = new ModuleAudio(this);
+	player = new ModulePlayer(this, false);
 	scene_intro = new ModuleSceneIntro(this);
-	scene = new ModuleScene(this);
+	scene = new ModuleScene(this, false);
 	physics = new ModulePhysics(this);
 
 	// The order of calls is very important!
