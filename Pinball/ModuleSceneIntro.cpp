@@ -24,6 +24,8 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
+
+	backgroundTexture = App->textures->Load("pinball/portada_pinball.png");
 	//Disable();
 	return ret;
 }
@@ -40,7 +42,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	buttonRect = { 0, 0, 100, 50 };
+	buttonRect = { 81, 548, 320, 160 };
 
 	SDL_GetMouseState(&mouse.x, &mouse.y);
 
@@ -56,6 +58,8 @@ update_status ModuleSceneIntro::Update()
 	{
 		Disable();
 	}
+
+	App->renderer->Blit(backgroundTexture, 0, 0);
 
 	return UPDATE_CONTINUE;
 }

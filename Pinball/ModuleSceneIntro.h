@@ -22,4 +22,5 @@ public:
 	bool mouseOverButton = false;
 	iPoint mouse;
 	SDL_Rect buttonRect;
+	SDL_Texture* backgroundTexture;
 };
