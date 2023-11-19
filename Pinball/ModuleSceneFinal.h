@@ -23,4 +23,7 @@ public:
 	iPoint mouse;
 	SDL_Rect buttonRect;
 	SDL_Texture* backgroundTexture;
+	int score = 0;
+	SDL_Rect scoreRect[10];
+	SDL_Texture* numsTexture;
 };

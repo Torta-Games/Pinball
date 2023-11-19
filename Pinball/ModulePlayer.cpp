@@ -88,7 +88,7 @@ update_status ModulePlayer::Update()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
-
+	ballTexture = nullptr;
 	App->scene->Disable();
 	App->scene_final->Enable();
 
