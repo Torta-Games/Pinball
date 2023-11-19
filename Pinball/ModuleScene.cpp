@@ -21,6 +21,13 @@ ModuleScene::~ModuleScene()
 // Load assets
 bool ModuleScene::Start()
 {
+	piston1Enabled = false;
+	piston2Enabled = false;
+	piston3Enabled = false;
+	piston4Enabled = false;
+	piston5Enabled = false;
+	piston6Enabled = false;
+
 	LOG("Loading assets");
 	bool ret = true;
 	backgroundTexture = App->textures->Load("pinball/pinball_background.png");
