@@ -66,6 +66,7 @@ bool ModuleScene::Start()
 
 	flipperFx = App->audio->LoadFx("pinball/Audio/flipper.ogg");
 	music = App->audio->LoadFx("pinball/Audio/music.ogg");
+	combo = App->audio->LoadFx("pinball/Audio/combo.ogg");
 
 	arrowLights.PushBack({ 0,0,480,800 });
 	arrowLights.PushBack({ 480,0,480,800 });
@@ -124,8 +125,6 @@ bool ModuleScene::Start()
 	coinPosition[2] = fPoint(340, 0);
 	coinPosition[3] = fPoint(120, -150);
 	coinPosition[4] = fPoint(280, -150);
-
-
 
 	currentAnim = &arrowLights;
 	currentAnimBlueLight = &blueLightAnim;
@@ -264,6 +263,9 @@ bool ModuleScene::CleanUp()
 	App->physics->world->DestroyBody(Propulsor_1->body);
 	App->physics->world->DestroyBody(Propulsor_2->body);
 	App->physics->world->DestroyBody(Propulsor_3->body);
+	App->physics->world->DestroyBody(Propulsor_4->body);
+	App->physics->world->DestroyBody(Propulsor_5->body);
+	App->physics->world->DestroyBody(Propulsor_6->body);
 	App->physics->world->DestroyBody(Palo_1->body);
 	App->physics->world->DestroyBody(Palo_2->body);
 	App->physics->world->DestroyBody(Palo_3->body);
@@ -584,6 +586,7 @@ update_status ModuleScene::Update()
 		piston1Enabled = false;
 		piston2Enabled = false;
 		piston3Enabled = false;
+		App->audio->PlayFx(combo);
 	}
 
 	if (piston4Enabled && piston5Enabled && piston6Enabled)
@@ -592,6 +595,7 @@ update_status ModuleScene::Update()
 		piston4Enabled = false;
 		piston5Enabled = false;
 		piston6Enabled = false;
+		App->audio->PlayFx(combo);
 	}
 
 	if (!piston1Enabled)

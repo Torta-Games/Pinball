@@ -20,12 +20,22 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	ballTexture = App->textures->Load("pinball/ball.png");
+	back2Texture = App->textures->Load("pinball/back2.png");
+	arrowLightsTexture = App->textures->Load("pinball/light_arrow.png");
 
 	point = App->audio->LoadFx("pinball/Audio/point.ogg");
 	boing = App->audio->LoadFx("pinball/Audio/boing.ogg");
 	jackpot = App->audio->LoadFx("pinball/Audio/jackpot.ogg");
 	portal = App->audio->LoadFx("pinball/Audio/portal.ogg");
-	back2Texture = App->textures->Load("pinball/back2.png");
+
+	arrowLights.PushBack({ 0,0,480,800 });
+	arrowLights.PushBack({ 480,0,480,800 });
+	arrowLights.PushBack({ 960,0,480,800 });
+	arrowLights.PushBack({ 1440,0,480,800 });
+	arrowLights.PushBack({ 1920,0,480,800 });
+	arrowLights.speed = 0.1f;
+	arrowLights.loop = true;
+	currentAnim = &arrowLights;
 
 	ballCount = 4;
 	score = 0;
@@ -86,6 +96,10 @@ update_status ModulePlayer::Update()
 
 	App->renderer->Blit(back2Texture, 0, 0);
 
+	currentAnim->Update();
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	App->renderer->Blit(arrowLightsTexture, 0, 0, &rect);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -95,6 +109,8 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading player");
 	ballTexture = nullptr;
 	back2Texture = nullptr;
+	arrowLightsTexture = nullptr;
+	arrowLights.currentFrame = 0;
 	App->scene->Disable();
 	App->scene_final->Enable();
 
@@ -175,21 +191,27 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		bodyA->body->ApplyLinearImpulse(impulseMagnitude * impulseDirection, bodyA->body->GetWorldCenter(), true);
 		break;
 	case ColliderType::PISTON1:
+		App->audio->PlayFx(point);
 		App->scene->piston1Enabled = true;
 		break;
 	case ColliderType::PISTON2:
+		App->audio->PlayFx(point);
 		App->scene->piston2Enabled = true;
 		break;
 	case ColliderType::PISTON3:
+		App->audio->PlayFx(point);
 		App->scene->piston3Enabled = true;
 		break;
 	case ColliderType::PISTON4:
+		App->audio->PlayFx(point);
 		App->scene->piston4Enabled = true;
 		break;
 	case ColliderType::PISTON5:
+		App->audio->PlayFx(point);
 		App->scene->piston5Enabled = true;
 		break;
 	case ColliderType::PISTON6:
+		App->audio->PlayFx(point);
 		App->scene->piston6Enabled = true;
 		break;
 	case ColliderType::COINS:
