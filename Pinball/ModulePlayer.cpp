@@ -25,6 +25,7 @@ bool ModulePlayer::Start()
 	boing = App->audio->LoadFx("pinball/Audio/boing.ogg");
 	jackpot = App->audio->LoadFx("pinball/Audio/jackpot.ogg");
 	portal = App->audio->LoadFx("pinball/Audio/portal.ogg");
+	back2Texture = App->textures->Load("pinball/back2.png");
 
 	ballCount = 4;
 	score = 0;
@@ -83,6 +84,8 @@ update_status ModulePlayer::Update()
 		Disable();
 	}
 
+	App->renderer->Blit(back2Texture, 0, 0);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -91,6 +94,7 @@ bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
 	ballTexture = nullptr;
+	back2Texture = nullptr;
 	App->scene->Disable();
 	App->scene_final->Enable();
 
