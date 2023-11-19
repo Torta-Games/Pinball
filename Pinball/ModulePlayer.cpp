@@ -23,6 +23,7 @@ bool ModulePlayer::Start()
 
 	point = App->audio->LoadFx("pinball/Audio/point.ogg");
 	boing = App->audio->LoadFx("pinball/Audio/boing.ogg");
+	jackpot = App->audio->LoadFx("pinball/Audio/jackpot.mp3");
 
 	balls.add(App->physics->CreateCircle(385,780, 10, b2_staticBody));
 	balls.add(App->physics->CreateCircle(410, 780, 10, b2_staticBody));
@@ -98,7 +99,7 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	impulseDirection.Normalize();
 	float impulseMagnitude = 1.0f;
 	float impulseMagnitude2 = 0.5f;
-
+	
 	switch (bodyB->ctype)
 	{
 	case ColliderType::SENSOR:
@@ -179,6 +180,10 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ColliderType::PISTON6:
 		App->scene->piston6Enabled = true;
+		break;
+	case ColliderType::COINS:
+		App->audio->PlayFx(jackpot);
+		App->scene->coins = true;
 		break;
 	}
 }
