@@ -27,6 +27,7 @@ bool ModuleScene::Start()
 	piston4Enabled = false;
 	piston5Enabled = false;
 	piston6Enabled = false;
+	coins = false;
 
 	LOG("Loading assets");
 	bool ret = true;
@@ -268,6 +269,12 @@ bool ModuleScene::CleanUp()
 	App->physics->world->DestroyBody(Boing_4->body);
 	App->physics->world->DestroyBody(circulo1->body);
 	App->physics->world->DestroyBody(circulo2->body);
+	App->physics->world->DestroyBody(circulo3->body);
+	App->physics->world->DestroyBody(circulo10k->body);
+	App->physics->world->DestroyBody(circulo5k->body);
+	App->physics->world->DestroyBody(circulo1k->body);
+	App->physics->world->DestroyBody(circulo100L->body);
+	App->physics->world->DestroyBody(circulo100R->body);
 
 	return true;
 }
