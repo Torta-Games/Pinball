@@ -23,7 +23,7 @@ bool ModulePlayer::Start()
 
 	point = App->audio->LoadFx("pinball/Audio/point.ogg");
 	boing = App->audio->LoadFx("pinball/Audio/boing.ogg");
-	jackpot = App->audio->LoadFx("pinball/Audio/jackpot.mp3");
+	jackpot = App->audio->LoadFx("pinball/Audio/jackpot.ogg");
 	portal = App->audio->LoadFx("pinball/Audio/portal.ogg");
 
 	ballCount = 4;
@@ -191,6 +191,7 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderType::COINS:
 		App->audio->PlayFx(jackpot);
 		App->scene->coins = true;
+		score += 7000;
 		break;
 	}
 }

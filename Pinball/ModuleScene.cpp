@@ -621,7 +621,7 @@ update_status ModuleScene::Update()
 		App->renderer->Blit(numsTexture, highScoreXPos + (i * 10), 40, &scoreRect[digit], 0.0f);
 	}
 
-	if (coins)
+	if (coins && coinPosition[0].y<2000)
 	{
 		coinPosition[0].y += 5;
 		coinPosition[1].y += 5;
