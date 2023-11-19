@@ -25,6 +25,7 @@ bool ModulePlayer::Start()
 	boing = App->audio->LoadFx("pinball/Audio/boing.ogg");
 	jackpot = App->audio->LoadFx("pinball/Audio/jackpot.ogg");
 	portal = App->audio->LoadFx("pinball/Audio/portal.ogg");
+	back2Texture = App->textures->Load("pinball/back2.png");
 
 	ballCount = 4;
 	score = 0;
@@ -83,6 +84,8 @@ update_status ModulePlayer::Update()
 		Disable();
 	}
 
+	App->renderer->Blit(back2Texture, 0, 0);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -91,6 +94,7 @@ bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
 	ballTexture = nullptr;
+	back2Texture = nullptr;
 	App->scene->Disable();
 	App->scene_final->Enable();
 
@@ -192,6 +196,26 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->audio->PlayFx(jackpot);
 		App->scene->coins = true;
 		score += 7000;
+		break;
+	case ColliderType::CIRCLE_10k:
+		App->audio->PlayFx(point);
+		score += 10000;
+		break;
+	case ColliderType::CIRCLE_5k:
+		App->audio->PlayFx(point);
+		score += 5000;
+		break;
+	case ColliderType::CIRCLE_1k:
+		App->audio->PlayFx(point);
+		score += 1000;
+		break;
+	case ColliderType::CIRCLE_100L:
+		App->audio->PlayFx(point);
+		score += 100;
+		break;
+	case ColliderType::CIRCLE_100R:
+		App->audio->PlayFx(point);
+		score += 100;
 		break;
 	}
 }

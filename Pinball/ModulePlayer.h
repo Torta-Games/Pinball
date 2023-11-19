@@ -26,6 +26,8 @@ public:
 	bool canTp2 = false;
 	int ballCount = 4;
 
+	SDL_Texture* back2Texture;
+
 	int score = 0;
 
 	int point, boing, portal,jackpot;
